@@ -43,18 +43,16 @@
                 var vehicle = markers[i].getAttribute("vehicle");
                 var time = markers[i].getAttribute("time");
                 var date = markers[i].getAttribute("date");
-                var comment = markers[i].getAttribute("comment");
+             //   var comment = markers[i].getAttribute("comment");
                 var cause = markers[i].getAttribute("acc_cause");
                 var point = new google.maps.LatLng(
                     parseFloat(markers[i].getAttribute("lat")),
                     parseFloat(markers[i].getAttribute("lng")));
-                var html = "<b>Severity: " +severity+ "</b> <br>Vehicle: " + vehicle + "<br>Date: " + date+ "<br>Time: " +time +"<br>Cause: "+cause+ "<br>Description: " +comment; 
-                //var icon = customIcons[type] || {};
+                var html = "<b>Severity: " +severity+ "</b> <br>Vehicle: " + vehicle + "<br>Date: " + date+ "<br>Time: " +time +"<br>Cause: "+cause;                 
                 var marker = new google.maps.Marker({
                     map: map,
                     position: point,
-                    //icon: icon.icon,
-                   // shadow: icon.shadow
+                   
                   });
                   bindInfoWindow(marker, map, infoWindow, html);
                }

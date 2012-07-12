@@ -27,7 +27,7 @@ if (!db_selected)
 }
 
 // Select all the rows in the markers table
-$query = "SELECT * FROM accidents WHERE 1";
+$query = "SELECT * FROM accidents2 WHERE 1";
 $result = mysql_query($query);
 if (!$result)
 {
@@ -49,7 +49,7 @@ while ($row = @mysql_fetch_assoc($result))
     echo 'date="' . parseToXML($row['date']) . '" ';
     echo 'lat="' . $row['lat'] . '" ';
     echo 'lng="' . $row['lng'] . '" ';
-    echo 'comment="'. parseToXML($row['description']) . '" ';
+    //echo 'comment="'. parseToXML($row['comment']) . '" ';
     echo 'time="' . parseToXML($row['time']).'" ';
     echo 'acc_cause="' . parseToXML($row['acc_cause']) . '"';
     echo '/>';
