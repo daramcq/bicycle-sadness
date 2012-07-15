@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Bicycle Sadness - Accident Report Map </title>
+</head>
+<body>
+
+  <div id="cm-example" style="width: 500px; height: 500px"></div>
+
+  <script type="text/javascript" src="http://tile.cloudmade.com/wml/latest/web-maps-lite.js"></script>
+  <script type="text/javascript">
+
+    <!--set up map -->
+    var cloudmade = new CM.Tiles.CloudMade.Web({key: '4a7ecbf54cd74519a944efa10e330c2e'});
+    var map = new CM.Map('cm-example', cloudmade);
+    map.setCenter(new CM.LatLng(53.3649, -6.218), 12);
+
+    <!-- map controls -->
+    var topRight = new CM.ControlPosition(CM.TOP_RIGHT, new CM.Size(50, 20));
+    map.addControl(new CM.SmallMapControl(), topRight);
+    map.addControl(new CM.LargeMapControl());
+    map.addControl(new CM.ScaleControl());
+    map.addControl(new CM.OverviewMapControl());
+
+    <!-- draggable map marker -->
+    var dublinLocation = new CM.LatLng(53.345171, -6.275854);
+
+    <!-- get location of clicks on the map-->
+    function displayMessage(msg) {
+	document.getElementById('message').innerHTML = msg;
+    }
+
+    CM.Event.addListener(map, 'click', function(latlng)
+    {
+       var myMarker = new CM.Marker(latlng);
+       map.addOverlay(myMarker);
+    });
+    
+    var myMarkerLatLng = new CM.LatLng(53.333, -6.249);
+    var myMarker = new CM.Marker(myMarkerLatLng, {
+	    title: "This is current location."
+    });
+
+    map.addOverlay(myMarker);
+    myMarker.openInfoWindow("This is an Info-Window");
+
+
+     downloadUrl("display2.php", function(data)
+         {
+            var xml = data.responseXML;
+            var markers = xml.documentElement.getElementsByTagName("marker");
+            for (var i = 0; i < markers.length; i++)
+            {
+                var severity = markers[i].getAttribute("severity");
+                var vehicle = markers[i].getAttribute("vehicle");
+                var time = markers[i].getAttribute("time");
+                var date = markers[i].getAttribute("date");
+                var comment = markers[i].getAttribute("comment");
+                var cause = markers[i].getAttribute("acc_cause");
+                var point = new CM.LatLng(
+                    parseFloat(markers[i].getAttribute("lat")),
+                    parseFloat(markers[i].getAttribute("lng")));
+                var html = "<b>Severity: " +severity+ "</b> <br>Vehicle: " + vehicle + "<br>Date: " + date+ "<br>Time: " +time +"<br>Cause: "+cause+ "<br>Comment: " +comment;                 
+                var marker = new CM.Marker(point, { title: severity });
+                map.addOverlay(marker);
+                marker.openInfoWindow(html);                                     
+               }
+            });
+            
+      function downloadUrl(url,callback)
+      {
+        var request = window.ActiveXObject ?
+          new ActiveXObject('Microsoft.XMLHTTP') :
+          new XMLHttpRequest;
+          
+          request.onreadystatechange = function()
+          {
+            if (request.readyState == 4)
+            {
+                request.onreadystatechange = doNothing;
+                callback(request, request.status);
+            }
+           };
+           
+           request.open('GET', url, true);
+           request.send(null);
+         }  
+          function doNothing(){}
+    <!-- set the centre point of the map -->
+    map.setCenter(dublinLocation, 10);
+
+
+
+
+
+  </script>
+
+  <div id="message">Drag or click the map.</div>
+
+</body>
+</html>
