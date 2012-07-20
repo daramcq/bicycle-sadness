@@ -99,16 +99,13 @@
        var vehicle_resp="";
        var cause_resp="";
        
-       var time=document.forms["acc_info"]["acc_hour"].value;
-       var time_resp="";
+       var hour_time = document.forms["acc_info"]["acc_hour"].value;
+       var time_resp = "";
        
-       if (loc==""||date==""||!checkRadio("acc_info","severity")||!checkRadio("acc_info","vehicle")||time=="" || !checkRadio("acc_info","cause"))
-       {
-        
+       if (loc==""||date==""||!checkRadio("acc_info","severity")||!checkRadio("acc_info","vehicle")||hour_time=="0" ||hour_time==""|| !checkRadio("acc_info","cause"))
+       {        
             if (loc=="")
-            {
                 loc_resp = "\n- Location";
-            }
             
             if (date=="")
                 date_resp="\n- Date";
@@ -119,13 +116,13 @@
             if (!checkRadio("acc_info","vehicle"))
                 vehicle_resp="\n- Vehicle Involved";
                 
-            if (time=="")
-                time_resp="\n- Time";
+            if (hour_time=="0"||hour_time=="")
+                time_resp="\n- Time " + time_string;
                 
             if (!checkRadio("acc_info","cause"))
                 cause_resp="\n- Cause";
                       
-            alert("The report is not complete, please enter the Incident's: " + loc_resp + sev_resp + vehicle_resp + date_resp + cause_resp);                       
+            alert("The report is not complete, please enter the Incident's: " + loc_resp + sev_resp + vehicle_resp + date_resp + time_resp + cause_resp);                       
             return false;          
         }
         var elapsed = new Date().getTime() - document.getElementById("counter").value;
@@ -146,11 +143,20 @@
         return false;
      }
      </script>
-     	 <script type="text/javascript">
+     <script type="text/javascript">
 		  function addTime()
-	      {
-	        var hour = parseInt(document.getElementById("ptTimeSelectUserSelHr").innerHTML);
+	      {  	        
+    	    var hour = parseInt(document.getElementById("ptTimeSelectUserSelHr").innerHTML) ;
+    	    if (isNaN(hour) || hour==0)
+    	      alert('Disaster ' +hour);    	       
+    	    
+    	    else
+    	    { 
+    	       hour = parseInt(hour);    
+            }
 	        var mins = parseInt(document.getElementById("ptTimeSelectUserSelMin").innerHTML);
+	        if (isNaN(parseInt(document.getElementById("ptTimeSelectUserSelMin").innerHTML)));
+	            hour=0;  
 	        var am_pm = document.getElementById("ptTimeSelectUserSelAmPm").innerHTML;
 	
 	        if (am_pm == "PM")
@@ -159,11 +165,173 @@
 	        }
 	        document.getElementById("acc_min").value = mins;
 	        document.getElementById("acc_hour").value = hour;
-	     }
-		
+	     }		
     </script>
+    <script>
+    function isDigit(c) {
+ 
+    return ((c=='0')||(c=='1')||(c=='2')||(c=='3')||(c=='4')||(c=='5')||(c=='6')||(c=='7')||(c=='8')||(c=='9'));
+}
+ 
+function isNumeric(n) {
+ 
+    num = parseInt(n,10);
+ 
+    return !isNaN(num);
+}
+ 
+function padZero(n) {
+    v="";
+    if (n<10){
+        return ('0'+n);
+    }
+    else
+    {
+        return n;
+    }
+}
+    
+    function timeValidate(ctl) {
 
-  </script>
+    t=ctl.value.toLowerCase();
+    t=t.replace(" ","");
+    t=t.replace(".",":");
+    t=t.replace("-","");
+ 
+    if (isNumeric(t)) {
+        if (t.length==3) {
+            t="0"+t;
+        }
+        if (t.length==4) {
+            t=t.charAt(0)+t.charAt(1)+":"+t.charAt(2)+t.charAt(3);
+        }
+    }
+ 
+    var t=new String(t);
+    tl=t.length;
+ 
+    if (tl==1 ) {
+        if (isDigit(t)) {
+            ctl.value=t+":00 AM";
+        }
+        else {
+            return false;
+        }
+    }
+    else if (tl==2) {
+        if (isNumeric(t)) {
+            if (parseInt(t,10)<12){
+                if (t.charAt(1)!=":") {
+                    ctl.value= t + ':00 AM';
+                }
+                else {
+                    ctl.value= t + '00 AM';
+                }
+            }
+            else if (parseInt(t,10)==24) {
+                ctl.value= "0:00 AM";
+            }
+            else if (parseInt(t,10)<24) {
+                if (t.charAt(1)!=":") {
+                    ctl.value= (t-12) + ':00 PM';
+                }
+                else {
+                    ctl.value= (t-12) + '00 PM';
+                }
+            }
+            else if (parseInt(t,10)<=60) {
+                ctl.value= '0:'+padZero(t)+' AM';
+            }
+            else {
+                ctl.value= '1:'+padZero(t%60)+' AM';
+            }
+        }
+        else
+        {
+            if ((t.charAt(0)==":")&&(isDigit(t.charAt(1)))) {
+                ctl.value = "0:" + padZero(parseInt(t.charAt(1),10)) + " AM";
+            }
+            else {
+                return false;
+            }
+        }
+    }
+    else if (tl>=3) {
+        
+        var mode;
+        var arr = t.split(":");
+        if (t.indexOf(":") > 0)
+        {
+            hr=parseInt(arr[0],10);
+            mn=parseInt(arr[1],10);
+            if (t.indexOf("PM")>0) {
+                mode="PM";
+            }
+            else {
+                mode="AM";
+            }
+ 
+            if (isNaN(hr)) {
+                hr=0;
+            } else {
+                if (hr>24) {
+                    return false;
+                }
+                else if (hr==24) {
+                    mode="AM";
+                    hr=0;
+                }
+                else if (hr>11) {
+                    mode="PM";
+                    if (hr>12) {
+                        hr-=12;
+                    }
+                }
+            }
+ 
+            if (isNaN(mn)) {
+                mn=0;
+            }
+            else {
+                if (mn>60) {
+                    mn=mn%60;
+                    hr+=1;
+                }
+            }
+        } else {
+ 
+            hr=parseInt(arr[0],10);
+ 
+            if (isNaN(hr)) {
+                hr=0;
+            } else {
+                if (hr>24) {
+                    return false;
+                }
+                else if (hr==24) {
+                    mode="AM";
+                    hr=0;
+                }
+                else if (hr>11) {
+                    mode="PM";
+                    if (hr>12) {
+                        hr-=12;
+                    }
+                }
+            }
+ 
+            mn = 0;
+        }
+ 
+        if (hr==24) {
+            hr=0;
+            mode="AM";
+        }
+        ctl.value=hr+":"+padZero(mn)+" "+mode;
+    }
+}
+</script>
+
 
  <div id="choice_panel">
         <h1>Accident Details
@@ -208,7 +376,7 @@
   <script type="text/javascript" src ="js/datepicker.js"></script>
       <br>
       Time of Accident
-     <input id="time" type="text" autocomplete="off"value="" />
+     <input id="time" type="text" autocomplete="off"value=""onblur="timeValidate(this)"/>
         <br>
         <br>
         Cause of Accident - Detailed
