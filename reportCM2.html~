@@ -18,7 +18,7 @@
     <p id="accident_choice">Accident</p>
   <br> <p id="theft_choice">Theft</p>
   <br> <p id="general_choice">General</p>
-  <input type="text" id="choice_made"></input>
+  <input type="hidden" id="choice_made"></input>
   </div>
     <script type = "text/javascript" src="js/write_accident.js"></script>
     <script type = "text/javascript" src="js/write_theft.js"></script>

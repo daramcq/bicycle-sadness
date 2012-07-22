@@ -47,7 +47,6 @@
                       margin: 10px;
                       margin-top: 0px;                      
                      }
-     #choice { color:blue;}                
     #left_choice_panel { height: 600px; 
                       width: 100px;
                       float:left;

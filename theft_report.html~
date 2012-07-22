@@ -1,0 +1,19 @@
+<h1>Theft Details</h1>
+       <form name ="theft_info" action="insert_theft.php" onsubmit="return validateForm();" method ="post">
+        <input name ="current_lat" id="inc_lat" value=""/>
+        <input name ="current_lng" id="inc_lng" value=""/> 
+        <input id = "acc_hour" name="hours" value=""/>
+        <input id = "acc_min" name="min"value=""/>
+        <input id = "counter" name="counter">
+        Date of Accident:
+        <br>
+        <input id="date" type="text" name="date" autocomplete="off" value="">
+  <script type="text/javascript" src ="js/datepicker.js"></script>
+      <br>
+      Time of Accident
+     <input id="time" type="text" autocomplete="off"value=""onblur="timeValidate(this)"/>
+        <br>
+        <br>
+        <input type="submit" value="Submit" onsubmit="/"> 
+        
+        </form>

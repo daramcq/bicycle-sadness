@@ -1,5 +1,5 @@
-$("#theft_choice").click(function(){
-    $("#choice_panel").load('theft_report.html');
+$("#accident_choice").click(function(){
+    $("#choice_panel").load('accident_report.html');
 
     if ($("#choice_made").html()!="made")
     {
