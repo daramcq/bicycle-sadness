@@ -1,0 +1,309 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <title>Bicycle Sadness - Accident Report Map </title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+   <!-- The date and time picker scripts -->   
+		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+		<script src="js/timepicker.js" type="text/javascript"></script>
+		<link type="text/css" rel="stylesheet" href="css/redmond/jquery-ui-1.8.18.custom.css"  />
+		    	
+	<!-- ptTimeSelect files below -->
+	<link rel="stylesheet" type="text/css" href="js/jquery.ptTimeSelect.css" media="screen" />
+	<script type="text/javascript" language="JavaScript" src="js/jquery.ptTimeSelect.js"></script>
+</head>
+<body>
+<div id = "left_choice_panel">  
+    <p id="accident_choice">Accident</p>
+  <br> <p id="theft_choice">Theft</p>
+  <br> <p id="general_choice">General</p>
+  </div>
+    <script type = "text/javascript" src="js/write_accident.js"></script>
+    <script type = "text/javascript" src="js/write_theft.js"></script>
+    <script type = "text/javascript" src = "js/write_hazard.js"></script>    
+
+  <div id="map_canvas" style="width: 640px; height: 640px"> </div>
+
+  <script type="text/javascript" src="http://tile.cloudmade.com/wml/latest/web-maps-lite.js"></script>
+  <script id = "map_functions" type="text/javascript">
+
+    <!--set up map -->
+    var cloudmade = new CM.Tiles.CloudMade.Web({key: '4a7ecbf54cd74519a944efa10e330c2e', styleId:68130});
+    var map = new CM.Map('map_canvas', cloudmade);
+    map.setCenter(new CM.LatLng(53.3649, -6.218), 12);
+
+    <!-- map controls -->
+    var topRight = new CM.ControlPosition(CM.TOP_RIGHT, new CM.Size(50, 20));
+    map.addControl(new CM.SmallMapControl(), topRight);
+    map.addControl(new CM.LargeMapControl());
+    map.addControl(new CM.ScaleControl());
+    map.addControl(new CM.OverviewMapControl());
+
+
+    <!-- set the centre point of the map -->
+    var dublinLocation = new CM.LatLng(53.345171, -6.275854);
+    map.setCenter(dublinLocation, 12);   
+
+
+  </script>
+   <!-- Validation Functions   -->
+    <script type="text/javascript">
+    function validateForm()
+    {
+       addTime();
+       
+       var loc=document.forms["acc_info"]["current_lat"].value;              
+       var loc_resp = "";
+        
+       var date=document.forms["acc_info"]["date"].value;
+       var date_resp="";
+       
+       var sev_resp = "";
+       var vehicle_resp="";
+       var cause_resp="";
+       
+       var hour_time = document.forms["acc_info"]["acc_hour"].value;
+       var time_resp = "";
+       
+       if (loc==""||date==""||!checkRadio("acc_info","severity")||!checkRadio("acc_info","vehicle")||hour_time=="0" ||hour_time==""|| !checkRadio("acc_info","cause"))
+       {        
+            if (loc=="")
+                loc_resp = "\n- Location";
+            
+            if (date=="")
+                date_resp="\n- Date";
+                       
+            if (!checkRadio("acc_info","severity"))
+                sev_resp="\n- Severity";            
+       
+            if (!checkRadio("acc_info","vehicle"))
+                vehicle_resp="\n- Vehicle Involved";
+                
+            if (hour_time=="0"||hour_time=="")
+                time_resp="\n- Time " + time_string;
+                
+            if (!checkRadio("acc_info","cause"))
+                cause_resp="\n- Cause";
+                      
+            alert("The report is not complete, please enter the Incident's: " + loc_resp + sev_resp + vehicle_resp + date_resp + time_resp + cause_resp);                       
+            return false;          
+        }
+        var elapsed = new Date().getTime() - document.getElementById("counter").value;
+        document.getElementById("counter").value = elapsed;
+        return true;
+    }
+     // http://quomon.com/question-Radio-button-validation-2405.aspx
+     function checkRadio (frmName, rbGroupName) 
+     {
+        var radios = document[frmName].elements[rbGroupName];
+        for (var i=0; i <radios.length; i++) 
+        {
+            if (radios[i].checked) 
+            {
+                return true;
+            }
+        }
+        return false;
+     }
+     </script>
+     <script type="text/javascript">
+		  function addTime()
+	      {  	        
+    	    var hour = parseInt(document.getElementById("ptTimeSelectUserSelHr").innerHTML) ;
+    	    if (isNaN(hour) || hour==0)
+    	      alert('Disaster ' +hour);    	       
+    	    
+    	    else
+    	    { 
+    	       hour = parseInt(hour);    
+            }
+	        var mins = parseInt(document.getElementById("ptTimeSelectUserSelMin").innerHTML);
+	        if (isNaN(parseInt(document.getElementById("ptTimeSelectUserSelMin").innerHTML)));
+	            hour=0;  
+	        var am_pm = document.getElementById("ptTimeSelectUserSelAmPm").innerHTML;
+	
+	        if (am_pm == "PM")
+	        {
+	            hour+=12;
+	        }
+	        document.getElementById("acc_min").value = mins;
+	        document.getElementById("acc_hour").value = hour;
+	     }		
+    </script>
+    <script>
+    function isDigit(c) {
+ 
+    return ((c=='0')||(c=='1')||(c=='2')||(c=='3')||(c=='4')||(c=='5')||(c=='6')||(c=='7')||(c=='8')||(c=='9'));
+}
+ 
+function isNumeric(n) {
+ 
+    num = parseInt(n,10);
+ 
+    return !isNaN(num);
+}
+ 
+function padZero(n) {
+    v="";
+    if (n<10){
+        return ('0'+n);
+    }
+    else
+    {
+        return n;
+    }
+}
+    
+    function timeValidate(ctl) {
+
+    t=ctl.value.toLowerCase();
+    t=t.replace(" ","");
+    t=t.replace(".",":");
+    t=t.replace("-","");
+ 
+    if (isNumeric(t)) {
+        if (t.length==3) {
+            t="0"+t;
+        }
+        if (t.length==4) {
+            t=t.charAt(0)+t.charAt(1)+":"+t.charAt(2)+t.charAt(3);
+        }
+    }
+ 
+    var t=new String(t);
+    tl=t.length;
+ 
+    if (tl==1 ) {
+        if (isDigit(t)) {
+            ctl.value=t+":00 AM";
+        }
+        else {
+            return false;
+        }
+    }
+    else if (tl==2) {
+        if (isNumeric(t)) {
+            if (parseInt(t,10)<12){
+                if (t.charAt(1)!=":") {
+                    ctl.value= t + ':00 AM';
+                }
+                else {
+                    ctl.value= t + '00 AM';
+                }
+            }
+            else if (parseInt(t,10)==24) {
+                ctl.value= "0:00 AM";
+            }
+            else if (parseInt(t,10)<24) {
+                if (t.charAt(1)!=":") {
+                    ctl.value= (t-12) + ':00 PM';
+                }
+                else {
+                    ctl.value= (t-12) + '00 PM';
+                }
+            }
+            else if (parseInt(t,10)<=60) {
+                ctl.value= '0:'+padZero(t)+' AM';
+            }
+            else {
+                ctl.value= '1:'+padZero(t%60)+' AM';
+            }
+        }
+        else
+        {
+            if ((t.charAt(0)==":")&&(isDigit(t.charAt(1)))) {
+                ctl.value = "0:" + padZero(parseInt(t.charAt(1),10)) + " AM";
+            }
+            else {
+                return false;
+            }
+        }
+    }
+    else if (tl>=3) {
+        
+        var mode;
+        var arr = t.split(":");
+        if (t.indexOf(":") > 0)
+        {
+            hr=parseInt(arr[0],10);
+            mn=parseInt(arr[1],10);
+            if (t.indexOf("PM")>0) {
+                mode="PM";
+            }
+            else {
+                mode="AM";
+            }
+ 
+            if (isNaN(hr)) {
+                hr=0;
+            } else {
+                if (hr>24) {
+                    return false;
+                }
+                else if (hr==24) {
+                    mode="AM";
+                    hr=0;
+                }
+                else if (hr>11) {
+                    mode="PM";
+                    if (hr>12) {
+                        hr-=12;
+                    }
+                }
+            }
+ 
+            if (isNaN(mn)) {
+                mn=0;
+            }
+            else {
+                if (mn>60) {
+                    mn=mn%60;
+                    hr+=1;
+                }
+            }
+        } else {
+ 
+            hr=parseInt(arr[0],10);
+ 
+            if (isNaN(hr)) {
+                hr=0;
+            } else {
+                if (hr>24) {
+                    return false;
+                }
+                else if (hr==24) {
+                    mode="AM";
+                    hr=0;
+                }
+                else if (hr>11) {
+                    mode="PM";
+                    if (hr>12) {
+                        hr-=12;
+                    }
+                }
+            }
+ 
+            mn = 0;
+        }
+ 
+        if (hr==24) {
+            hr=0;
+            mode="AM";
+        }
+        ctl.value=hr+":"+padZero(mn)+" "+mode;
+    }
+}
+</script>
+
+
+ <div id="choice_panel">
+        
+        <script type="text/javascript">
+    $('input#time').ptTimeSelect({  });
+    </script>
+      </div>
+      </div>
+
+</body>
+</html>
