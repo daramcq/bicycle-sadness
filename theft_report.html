@@ -2,18 +2,29 @@
        <form name ="theft_info" action="insert_theft.php" onsubmit="return validateForm();" method ="post">
         <input name ="current_lat" id="inc_lat" value=""/>
         <input name ="current_lng" id="inc_lng" value=""/> 
-        <input id = "acc_hour" name="hours" value=""/>
-        <input id = "acc_min" name="min"value=""/>
+        <input id = "left_hour" name="left_hour" value=""/>
+        <input id = "left_min" name="left_min"value=""/>
+        <input id = "found_hour" name="found_hour" value=""/>
+        <input id = "found_min" name="found_min"value=""/>
+        
         <input id = "counter" name="counter">
         Date Left:
         <br>
-        <input id="date" type="text" name="date" autocomplete="off" value="">
+        <input id="date" type="text" name="left_date" autocomplete="off" value="">
   <script type="text/javascript" src ="js/datepicker.js"></script>
       <br>
       Time Left:
      <input id="time" type="text" autocomplete="off"value=""onblur="timeValidate(this)"/>
-        <br>
-        <br>
-        <input type="submit" value="Submit" onsubmit="/"> 
+     <br>
+     Date Found Missing:
+     <br>
+     <input id="date" type="text" name="found_date" autocomplete="off" value="">
+     <script type="text/javascript" src ="js/datepicker.js"></script>
+     <br>
+     Time Found Missing:
+     <input id="time" type="text" autocomplete="off"value=""onblur="timeValidate(this)"/>
+     <br>
+     <br>
+     <input type="submit" value="Submit" onsubmit="/"> 
         
         </form>
