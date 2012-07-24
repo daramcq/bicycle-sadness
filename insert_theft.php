@@ -1,29 +1,40 @@
 <?php
 // Database Connection
-include 'connection.php';
+include 'local_connection2.php';
 
-$severity_info = $_POST['severity'];
 $lat = $_POST['current_lat'];
 $lng = $_POST['current_lng'];
-$desc = $_POST['comment'];
-$hour = $_POST['hours'];
-$min = $_POST['min'];
-$time = $hour . ":" . $min . ":00" ;
-$elapsed = $_POST['counter'];
+$left_date = $_POST['left_date'];
+$left_date = $_POST['found_date'];
+$left_time = $_POST['time_left']; 
+$found_time = $_POST['time_found'];
+$elapsed = $_POST['counter'];        
 
-$sql="INSERT INTO accidents (severity, vehicle, date, time, lat, lng, description, elapsed, acc_cause)
-VALUES
-('$_POST[severity]','$_POST[vehicle]','$_POST[date]','$time','$_POST[current_lat]','$_POST[current_lng]', '$_POST[comment]', '$elapsed', '$_POST[cause]')";
+if (strpos($left_time, 'PM'))
+{
+    $hour = substr($left_time,0,2) + 12;
+    $min = substr($left_time,2,2);
+    $left_time = $hour . ":" . $min;       
+}    
+if (strpos($found_time, 'PM'))
+{
+    $hour = substr($found_time,0,2) + 12;
+    $min = substr($found_time,2,2);
+    $found_time = $hour . ":" . $min;       
+}
+echo  "<h1>" . $left_time . "    " . $found_time . "</h1>" ;
 
-$go = "thanks.php";
+$sql="INSERT INTO thefts (lat, lng, date_left, time_left, found_date, found_time, elapsed)
+VALUES 
+('$_POST[current_lat]','$_POST[current_lng]','$_POST[left_date]','$left_time','$_POST[found_date]','$found_time', '$elapsed')";
+
 if (!mysql_query($sql,$con))
-  {
-    $go ="error.php";
+{
   die('Error: ' . mysql_error());
-  }
+}
 
 
-mysql_close($con)
+mysql_close($con);
 
 ?> 
 
@@ -41,7 +52,5 @@ function delayedRedirect()
 <p class="Thanks"> Thanks for reporting your bike-theft!<br> You can access our collected data on incidents, or report another incident from our home page.</p>
   </div>
 
-<body onLoad="setTimeout('delayedRedirect()', 3000)">
-
-
+<!--<body onLoad="setTimeout('delayedRedirect()', 3000)">-->
 </html>

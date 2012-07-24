@@ -28,13 +28,13 @@ if (!$result)
 header("Content-type: text/xml");
 
 // Start XML file, echo parent node
-echo '<markers>';
+echo '<accidents>';
 
 // Iterate through the rows adding XML nodes for each
 while ($row = @mysql_fetch_assoc($result))
 {
     // ADD TO XML DOCUMENT NODE
-    echo '<marker ';
+    echo '<accident ';
     echo 'severity="' . parseToXML($row['severity']) . '" ';
     echo 'vehicle="' . parseToXML($row['vehicle']) . '" ';
     echo 'date="' . parseToXML($row['date']) . '" ';
@@ -46,6 +46,6 @@ while ($row = @mysql_fetch_assoc($result))
     echo '/>';
 }
 
-echo '</markers>';
+echo '</accidents>';
     
 ?>

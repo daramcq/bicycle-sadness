@@ -1,48 +1,9 @@
-function validateAccident()
+function validateText(text)
 {
-    addTime();
-    if (validateLocation("#inc_lat") && checkRadio("acc_info","severity") && checkRadio("acc_info","vehicle") && checkRadio("acc_info","cause") && validateDate("date") && validateTime("#acc_hour"))
-    {                
-        var elapsed = new Date().getTime() - $("#counter").val();
-        $("#counter").val(elapsed);
-        
-        $("#acc_lat").val($("#inc_lat").val());
-        $("#acc_lng").val($("#inc_lng").val());        
+    if (!$(text).val()=="")
         return true;
-    }
     else
-    {
-        var resp = " ";
-        
-        if (!validateLocation("#inc_lat"))
-            resp += "\n- Location";
-        if (!checkRadio("acc_info","severity"))
-            resp += "\n- Severity";
-        if (!checkRadio("acc_info","vehicle"))
-            resp += "\n- Vehicle";
-        if (!checkRadio("acc_info","cause"))
-            resp += "\n- Cause";
-        if (!validateDate("#date"))
-            resp += "\n- Date";
-        if (!validateTime("#acc_hour"))
-            resp += "\n- Time";        
-        alert('Not fully filled out. Please enter: '+resp);
-        return false;
-    }
-}
-
-function validateTheft()
-{
-    
-
-
-}
-
-function validateHazard()
-{
-    validateLocation("current_lat");
-
-
+        return false;    
 }
 
 function validateLocation(loc)
@@ -55,20 +16,22 @@ function validateLocation(loc)
 
 function validateDate(date)
 {
-    if ($(date).html()=="")
+    if ($(date).val()=="")
         return false;
     else
         return true;    
 }
+
 
 function validateTime(time)
 {
-    if (isNaN($(time).val()) || $(time).val()==0)
+    if ($(time).val()=="")
         return false;
     else
         return true;    
 
 }
+// http://quomon.com/question-Radio-button-validation-2405.aspx
 function checkRadio (frmName, rbGroupName) 
 {
     var radios = document[frmName].elements[rbGroupName];
@@ -81,75 +44,10 @@ function checkRadio (frmName, rbGroupName)
     }
     return false;
 }
+		
 
-function validateForm()
-{
-       addTime();
-       
-       var loc=document.forms["acc_info"]["current_lat"].value;              
-       var loc_resp = "";
-        
-       var date=document.forms["acc_info"]["date"].value;
-       var date_resp="";
-       
-       var sev_resp = "";
-       var vehicle_resp="";
-       var cause_resp="";
-       
-       var hour_time = document.forms["acc_info"]["acc_hour"].value;
-       var time_resp = "";
-       
-       if (loc==""||date==""||!checkRadio("acc_info","severity")||!checkRadio("acc_info","vehicle")||hour_time=="0" ||hour_time==""|| !checkRadio("acc_info","cause"))
-       {        
-            if (loc=="")
-                loc_resp = "\n- Location";
-            
-            if (date=="")
-                date_resp="\n- Date";
-                       
-            if (!checkRadio("acc_info","severity"))
-                sev_resp="\n- Severity";            
-       
-            if (!checkRadio("acc_info","vehicle"))
-                vehicle_resp="\n- Vehicle Involved";
-                
-            if (hour_time=="0"||hour_time=="")
-                time_resp="\n- Time " + time_string;
-                
-            if (!checkRadio("acc_info","cause"))
-                cause_resp="\n- Cause";
-                      
-            alert("The report is not complete, please enter the Incident's: " + loc_resp + sev_resp + vehicle_resp + date_resp + time_resp + cause_resp);                       
-            return false;          
-        }
-        var elapsed = new Date().getTime() - $("#counter").val();
-        $("#counter").val() = elapsed;
-        return true;
-    }
-     // http://quomon.com/question-Radio-button-validation-2405.aspx
-   
-
-function addTime()
-{  	        
-    	    var hour = parseInt($("#ptTimeSelectUserSelHr").html()) ;
-    	    
-    	    if (isNaN(hour) || hour==0)
-    	      alert('Disaster ' +hour);    	       
-
-	        var mins = parseInt($("#ptTimeSelectUserSelMin").html());
-	        /*if (isNaN(parseInt($("#ptTimeSelectUserSelMin").html())));
-	            alert('hour is NaN');  */
-	        var am_pm = $("#ptTimeSelectUserSelAmPm").html();
-	
-	        if (am_pm == "PM")
-	        {
-	            hour+=12;
-	        }
-	        $("#acc_min").val(mins);
-	        $("#acc_hour").val(hour);
-} 		
-    function isDigit(c) {
- 
+function isDigit(c) 
+{ 
     return ((c=='0')||(c=='1')||(c=='2')||(c=='3')||(c=='4')||(c=='5')||(c=='6')||(c=='7')||(c=='8')||(c=='9'));
 }
  
@@ -309,5 +207,5 @@ function padZero(n) {
         }
         ctl.value=hr+":"+padZero(mn)+" "+mode;
     }
-}
+} 
 
