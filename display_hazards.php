@@ -36,8 +36,8 @@ while ($row = @mysql_fetch_assoc($result))
     // ADD TO XML DOCUMENT NODE
     echo '<hazard ';
     echo 'date="' . parseToXML($row['date']) . '" ';
-    echo 'time"' . parseToXML($row['time']) . '" ';
-    echo 'explanation"' . parseToXML($row['explanation']) . '" ';
+    echo 'time="' . parseToXML($row['time']) . '" ';
+    echo 'explanation="' . parseToXML($row['explanation']) . '" ';
     echo 'lat="' . $row['lat'] . '" ';
     echo 'lng="' . $row['lng'] . '" ';
     echo '/>';
