@@ -1,11 +1,23 @@
     var count = 0;
     var myMarker;
 
-  CM.Event.addListener(map, 'click', function(latlng) 
+  L.Event.addListener(map, 'click', function(latlng) 
   {         
      placeMarker(latlng, map);            
   }); 
   
+map.on('click', onMapClick);
+
+var popup = new L.Popup();
+
+function onMapClick(e) {
+    var latlngStr = '(' + e.latlng.lat.toFixed(3) + ', ' + e.latlng.lng.toFixed(3) + ')';
+
+    popup.setLatLng(e.latlng);
+    popup.setContent("You clicked the map at " + latlngStr);
+
+    map.openPopup(popup);
+}
   
   function placeMarker(position, map)
   {
@@ -18,13 +30,14 @@
     }
     else
     {        
-        myMarker = new CM.Marker(position, {draggable:true} );
-        map.addOverlay(myMarker);
+        myMarker = new L.Marker(position, {draggable:true} );
+        map.addLayer(myMarker);
         getLocation(myMarker, map);
         count = 1;
         
-        CM.Event.addListener(myMarker, 'dragend', function() {
+        L.Event.addListener(myMarker, 'dragend', function() {
 	    getLocation(myMarker,map);
+	   
         });
     }
   }
