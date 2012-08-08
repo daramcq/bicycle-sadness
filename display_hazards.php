@@ -3,7 +3,7 @@ require "local_connection2.php";
 require "functions.php";
 
 // Open connection to db server
-$connection = mysql_connect (localhost, $username, $password);
+$connection = mysql_connect ("mysql1443int.cp.blacknight.com", $username, $password);
 
 if (!$connection)
 {

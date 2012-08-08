@@ -1963,6 +1963,12 @@ L.TileLayer.WMS = L.TileLayer.extend({
 
 		L.TileLayer.prototype.onAdd.call(this, map);
 	},
+	
+	onAdd: function (map,addToBottom) {
+    var projectionKey = (parseFloat(this.wmsParams.version) >= 1.3 ? 'crs' : 'srs');
+    this.wmsParams[projectionKey] = map.options.crs.code;
+    L.TileLayer.prototype.onAdd.call(this, map, addToBottom);
+},	
 
 	getTileUrl: function (/*Point*/ tilePoint, /*Number*/ zoom)/*-> String*/ {
 		var tileSize = this.options.tileSize,

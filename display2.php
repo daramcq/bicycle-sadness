@@ -3,11 +3,11 @@ require "local_connection2.php";
 require "functions.php";
 
 // Open connection to db server
-$connection = mysql_connect (localhost, $username, $password);
+$connection = mysql_connect ("mysql1443int.cp.blacknight.com", $username, $password);
 
 if (!$connection)
 {
-    die('Not connected : ' . mysql_error());
+    die('Not connected: ' . mysql_error());
 }
 
 // Set the active MySql database
@@ -18,7 +18,7 @@ if (!db_selected)
 }
 
 // Select all the rows in the markers table
-$query = "SELECT * FROM accidents2 WHERE 1";
+$query = "SELECT * FROM accidents WHERE 1";
 $result = mysql_query($query);
 if (!$result)
 {
