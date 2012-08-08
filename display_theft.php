@@ -2,21 +2,6 @@
 require "local_connection2.php";
 require "functions.php";
 
-// Open connection to db server
-$connection = mysql_connect ("mysql1443int.cp.blacknight.com", $username, $password);
-
-if (!$connection)
-{
-    die('Not connected : ' . mysql_error());
-}
-
-// Set the active MySql database
-$db_selected = mysql_select_db($database, $connection);
-if (!db_selected)
-{
-    die ('Can\'t use db : '. mysql_error());
-}
-
 // Select all the rows in the markers table
 $query = "SELECT * FROM thefts WHERE 1";
 $result = mysql_query($query);

@@ -31,7 +31,20 @@ function validateTime(time)
         return true;    
 
 }
-	
+// http://quomon.com/question-Radio-button-validation-2405.aspx
+function checkRadio (frmName, rbGroupName) 
+{
+    var radios = document[frmName].elements[rbGroupName];
+    for (var i=0; i <radios.length; i++) 
+    {
+        if (radios[i].checked) 
+        {
+            return true;
+        }
+    }
+    return false;
+}
+		
 
 function isDigit(c) 
 { 

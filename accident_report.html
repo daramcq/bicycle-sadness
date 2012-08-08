@@ -1,56 +1,44 @@
-<h1>Accident Details
-        </h1>
-       <form name ="acc_info" action="insert.php" onsubmit="return validateForm();" method ="post">
-        <input name ="current_lat" id="inc_lat" value=""/>
-        <input name ="current_lng" id="inc_lng" value=""/> 
-        <input id = "acc_hour" name="hours" value=""/>
-        <input id = "acc_min" name="min"value=""/>
-        <input id = "counter" name="counter">
-        Severity of accident
-        <br>                        
-        <input type="radio" name="severity" value="near_miss" />Near-Miss<br />    
-        <input type="radio" name="severity" value="light" />Light<br />
-        <input type="radio" name="severity" value="moderate" />Moderate<br />
-        <input type="radio" name="severity" value="severe" />Severe
-        <br>
-        <br>
-        Type of Vehicles Involved:
-        <br>
-        <input type="radio" name="vehicle" value="car" /> Car<br>
-        <input type="radio" name="vehicle" value="taxi" /> Taxi<br>
-        <input type="radio" name="vehicle" value="bus" /> Bus<br>
-        <input type="radio" name="vehicle" value="truck" /> Truck<br>
-        <input type="radio" name="vehicle" value="van" /> Van<br>
-        <input type="radio" name="vehicle" value="motorbike" /> Motorbike<br>
-        <input type="radio" name="vehicle" value="cyclist" /> Cyclist<br>              
-        <br>
-        Cause of Accident:
-        <br>
-        <input type="radio" name="cause" value="vehicle_left_turn"/> Vehicle Turning Left<br>
-        <input type="radio" name="cause" value="vehicle_lane_change"/> Vehicle Changing Lane<br>
-        <input type="radio" name="cause" value="vehicle_overtaking"/> Vehicle Overtaking<br>
-        <input type="radio" name="cause" value="cyclist_right_turn"/> Cyclist Turning Right<br>
-        <input type="radio" name="cause" value="vehicle_door"/> Vehicle Door Opening<br>
-        <input type="radio" name="cause" value="vehicle_stop"/> Vehicle Stopping Suddenly<br>
-        <input type="radio" name="cause" value="other"/> Other- Please specify Below<br>
-        <br>
-        Date of Accident:
-        <br>
-        <input id="date" type="text" name="date" autocomplete="off" value="">
-  <script type="text/javascript" src ="js/datepicker.js"></script>
-      <br>
-      Time of Accident
-     <input id="time" type="text" autocomplete="off" onblur="timeValidate(this);">
-     <script type="text/javascript">
-    $('#time').ptTimeSelect();
-    </script>
-        <br>
-        <br>
-        Cause of Accident - Detailed
-        <textarea name="comment" autocomplete="off" cols="31" rows="4"></textarea>
-        <br>
-        <br>
-
-        <input type="submit" value="Submit" onsubmit="/"> 
-        
-        </form>
+	<h1>Accident Details</h1>
+<form name ="acc_info" action="insert_accident.php" onsubmit="return validateAccident();" method ="post">
+<input id = "counter" name="counter" type="hidden">
+<input name ="current_lat" type = "hidden" id="acc_lat" value=""/>
+<input name ="current_lng" type = "hidden" id="acc_lng" value=""/> 
+<h2>Severity of accident:</h2>                   
+<select name="severity">
+<option value="near_miss">Near-Miss</option>
+<option value="light">Light</option>
+<option value="moderate">Moderate</option>
+<option value="severe">Severe</option>
+</select>
+<h2>Type of Vehicles Involved:</h2>
+<select name="vehicle">
+<option value="car">Car</option>
+<option value="taxi">Taxi</option>
+<option value="bus">Bus</option>
+<option value="truck">Truck</option>
+<option value="van">Van</option>
+<option value="motorbike">Motorbike</option>
+<option value="cyclist">Cyclist</option>
+</select>
+<h2>Cause of Accident:</h2>
+<select name="vehicle">
+<option value="vehicle_left_turn">Vehicle Turning Left</option>
+<option value="vehicle_lane_change"/>Vehicle Changing Lane</option>
+<option value="vehicle_overtaking"/>Vehicle Overtaking</option>
+<option value="cyclist_right_turn"/>Cyclist Turning Right</option>
+<option value="vehicle_door"/> Vehicle Door Opening</option>
+<option value="vehicle_stop"/> Vehicle Stopping Suddenly</option>
+<option value="other"/> Other- Please specify Below</option>   
+</select>     
+<h2>Date of Accident:</h2>
+<input id="date" type="text" name="date" autocomplete="off" value="">
+<script type="text/javascript">$('#date').datepicker();</script>
+<h2>Time of Accident:</h2>
+<input id="time" name="time" type="text" autocomplete="off" onblur="timeValidate(this);">
+<script type="text/javascript">
+$('#time').ptTimeSelect();
+</script>
+<h2>Cause of Accident - Detailed:</h2>
+<textarea name="comment" autocomplete="off" cols="31" rows="4"></textarea>
+<input type="submit" value="Submit" onsubmit="/"> 
+</form>

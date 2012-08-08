@@ -1,5 +1,5 @@
 $("#accident_choice").click(function(){
-    $("#choice_panel").load('accident_report.html');
+    $("#right").load('accident_report.html');
 
     if ($("#choice_made").html()!="made")
     {
@@ -7,4 +7,4 @@ $("#accident_choice").click(function(){
         $('#map_functions').append(marker_functions);
         $("#choice_made").html("made");
     }    
-     });
+});
