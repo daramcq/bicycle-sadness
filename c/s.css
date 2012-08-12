@@ -138,6 +138,10 @@ p.choice_panel{
 	padding: 15px 100px 0 50px;
 }
 
+p.bubble {
+    color: #000000;
+}
+
 #actionbuttons {
 	position:absolute;
 	z-index: 499;

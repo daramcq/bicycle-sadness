@@ -96,27 +96,20 @@ new TWTR.Widget({
 
 });
 
-<!-- advanced stuff for the layers, funky-->
-
 var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/4a7ecbf54cd74519a944efa10e330c2e/{styleId}/256/{z}/{x}/{y}.png',
-
     cloudmadeAttribution = 'OutSpoken, Dublin, 2012',
-
     cloudmadeOptions = {maxZoom: 18, attribution: cloudmadeAttribution};
 
 var minimal = new L.TileLayer(cloudmadeUrl, cloudmadeOptions, {styleId: 22677}),
-
     midnightCommander = new L.TileLayer(cloudmadeUrl, cloudmadeOptions, {styleId: 999});
 
 
-<!-- the fun begins, we create a new Layer for each cate., need to create this before we actually parse the markers-->
-
+<!-- We create a new Layer for each cate., need to create this before we actually parse the markers-->
         var accidentsLayer = new L.LayerGroup();
         var theftLayer = new L.LayerGroup();
         var hazardLayer = new L.LayerGroup();
 
 // Define the icons to be applied to the markers
-
 var AccIcon = L.Icon.extend({
     iconUrl: 'dist/images/accident.png',
     shadowUrl: '../dist/images/marker-shadow.png',
@@ -131,7 +124,6 @@ var AccIcon = L.Icon.extend({
 
 var accIcon = new AccIcon();
 
-
 var HazIcon = L.Icon.extend({
 
     iconUrl: 'dist/images/generalhazard.png',
@@ -140,7 +132,6 @@ var HazIcon = L.Icon.extend({
    // shadowSize: new L.Point(68, 95),
     iconAnchor: new L.Point(22, 94),
     popupAnchor: new L.Point(-3, -76)
-
 });
 
  
@@ -190,56 +181,43 @@ var overlayMaps = {
 
      downloadUrl("display2.php", function(data)
      {
-
-            var xml = data.responseXML;
-            var accidents = xml.documentElement.getElementsByTagName("accident");
-            for (var i = 0; i < accidents.length; i++)
-
-            {
-
-                var severity = accidents[i].getAttribute("severity");
-                var vehicle = accidents[i].getAttribute("vehicle");
-                var time = accidents[i].getAttribute("time");
-                var date = accidents[i].getAttribute("date");
-                var comment = accidents[i].getAttribute("comment");
-                var cause = accidents[i].getAttribute("acc_cause");
-                var point = new L.LatLng(
-                    parseFloat(accidents[i].getAttribute("lat")),
-                    parseFloat(accidents[i].getAttribute("lng")));
-                var html = "<b>Severity: " +severity+ "</b> <br>Vehicle: " + vehicle + "<br>Date: " + date+ "<br>Time: " +time +"<br>Cause: "+cause+ "<br>Comment: ";             
-                var marker = new L.Marker(point, {title: 'Accident', icon: accIcon});
-                marker.bindPopup(html); //adding html information
-                accidentsLayer.addLayer(marker);  //we add the marker to the layer, simple2                                
-               }
-
-            });
+        var xml = data.responseXML;
+        var accidents = xml.documentElement.getElementsByTagName("accident");
+        for (var i = 0; i < accidents.length; i++)
+        {
+            var severity = accidents[i].getAttribute("severity");
+            var vehicle = accidents[i].getAttribute("vehicle");
+            var time = accidents[i].getAttribute("time");
+            var date = accidents[i].getAttribute("date");
+            var comment = accidents[i].getAttribute("comment");
+            var cause = accidents[i].getAttribute("acc_cause");
+            var point = new L.LatLng(
+                parseFloat(accidents[i].getAttribute("lat")),
+                parseFloat(accidents[i].getAttribute("lng")));                
+            var marker = new L.Marker(point, {title: 'Accident', icon: accIcon});
+            accidentsLayer.addLayer(marker);  //we add the marker to the layer, simple2                                
+           }
+        });
 
         map.addLayer(accidentsLayer); //insert the Layer Accidents into map.           
          
 
          downloadUrl("display_theft.php", function(data)
-
          {
-
             var xml = data.responseXML;
-
             var thefts = xml.documentElement.getElementsByTagName("theft");
-
             for (var i = 0; i < thefts.length; i++)
-
             {
-
-                var date_left = thefts[i].getAttribute("date_left");
-                var time_left = thefts[i].getAttribute("time_left");
-                var found_date = thefts[i].getAttribute("found_date");
-                var point = new L.LatLng(
-                    parseFloat(thefts[i].getAttribute("lat")),
-                    parseFloat(thefts[i].getAttribute("lng")));
-                var html = date_left+ " " +found_date;
-                var marker = new L.Marker(point,{title: 'Accident', icon: theftIcon});
-                marker.bindPopup(html) //adding html information
-                theftLayer.addLayer(marker);                                     
-               }
+              var date_left = thefts[i].getAttribute("date_left");
+              var time_left = thefts[i].getAttribute("time_left");
+              var found_date = thefts[i].getAttribute("found_date");
+              var point = new L.LatLng(
+                  parseFloat(thefts[i].getAttribute("lat")),
+                  parseFloat(thefts[i].getAttribute("lng")));
+              var html = date_left+ " " +found_date;
+              var marker = new L.Marker(point,{title: 'Accident', icon: theftIcon});               
+              theftLayer.addLayer(marker);                                     
+            }
             });
         
          map.addLayer(theftLayer);  
@@ -250,51 +228,38 @@ var overlayMaps = {
             var hazards = xml.documentElement.getElementsByTagName("hazard");
             for (var i = 0; i < hazards.length; i++)
             {
-                var date = hazards[i].getAttribute("date");
-                var time = hazards[i].getAttribute("time");
-                var explanation = hazards[i].getAttribute("explanation");               
-                var point = new L.LatLng(
-                    parseFloat(hazards[i].getAttribute("lat")),
-                    parseFloat(hazards[i].getAttribute("lng")));                               
-                var marker = new L.Marker(point, {icon: hazIcon});
-                marker.bindPopup(explanation) //adding html information
-                hazardLayer.addLayer(marker);                                    
-               }
-            });    
+              var date = hazards[i].getAttribute("date");
+              var time = hazards[i].getAttribute("time");
+              var explanation = hazards[i].getAttribute("explanation");               
+              var point = new L.LatLng(
+                  parseFloat(hazards[i].getAttribute("lat")),
+                  parseFloat(hazards[i].getAttribute("lng")));                               
+              var marker = new L.Marker(point, {icon: hazIcon});             
+              hazardLayer.addLayer(marker);                                    
+            }
+        });    
 
           map.addLayer(hazardLayer);  
 
       function downloadUrl(url,callback)
       {
         var request = window.ActiveXObject ?
-
           new ActiveXObject('Microsoft.XMLHTTP') :
           new XMLHttpRequest;
-
           request.onreadystatechange = function()
           {
-
             if (request.readyState == 4)
-
             {
-
-                request.onreadystatechange = doNothing;
-
-                callback(request, request.status);
-
+              request.onreadystatechange = doNothing;
+              callback(request, request.status);
             }
+          };
 
-           };
+          request.open('GET', url, true);
+          request.send(null);
+      } 
 
-           request.open('GET', url, true);
-
-           request.send(null);
-
-         } 
-
-          function doNothing(){}
- 
-
+      function doNothing(){}
   </script>
    <!-- Validation Functions   -->
   <script src="js/validation_functions.js"></script>
