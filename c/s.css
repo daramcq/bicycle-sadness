@@ -100,13 +100,13 @@ p.choice_panel{
 	//border-radius: 5px;
 }
 
-#map_canvas {
-    width: 772px;
+#map {
+    border-radius: 10px 10px 10px 10px;
     height: 380px;
+    left: 0;
     position: absolute;
     top: 0;
-    left: 0;
-	border-radius: 10px;
+    width: 772px;
 }
 
 #map_canvas_large {
