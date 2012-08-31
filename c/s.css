@@ -142,6 +142,29 @@ p.bubble {
     color: #000000;
 }
 
+#accident_choice{
+	opacity: 0.4;
+}
+
+#accident_choice:hover{
+	opacity: 1.0;
+}
+
+#theft_choice{
+	opacity: 0.4;
+}
+
+#theft_choice:hover{
+	opacity: 1.0;
+}
+
+#general_choice{
+	opacity: 0.4;
+}
+
+#general_choice:hover{
+	opacity: 1.0;
+}
 #actionbuttons {
 	position:absolute;
 	z-index: 499;

@@ -32,10 +32,10 @@
   		<div id="mapoverlay">
     		<div class="step">
           <p>1. Choose a type of report...</p>
-          <img src="i/accident_btn.png" id='accident_choice' />
-          <img src="i/thieves_btn.png" id="theft_choice" style="opacity:0.4"/>
-          <img src="i/hazard_btn.png" id="general_choice" style="opacity:0.4"/>
-    		  <p>mouseover text</p>
+          <img src="i/accident_btn.png" id='accident_choice'/>
+          <img src="i/thieves_btn.png" id="theft_choice"/>
+          <img src="i/hazard_btn.png" id="general_choice"/>
+    		  <p id='mouseover'></p>
     		</div>
     		<div class="step">
           <p>2. Place incident on the map...</p>
@@ -88,7 +88,8 @@ var minimal = new L.TileLayer(cloudmadeUrl, cloudmadeOptions, {styleId: 22677}),
 var map = new L.Map('map_canvas_large', {
     center: new L.LatLng(53.3649, -6.218),
     zoom: 12,
-    layers: [minimal, accidentsLayer,theftLayer,hazardLayer]
+    layers: [minimal, accidentsLayer,theftLayer,hazardLayer],
+    zoomControl: false
 });
 
 <!-- Adding the controls -->
@@ -104,13 +105,16 @@ var overlayMaps = {
 };
 
 var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
-map.addControl(layersControl);  
+//var zoomControl = new L.Control.Layers(zoomButton);
+map.addControl(layersControl);
+map.addControl(new L.Control.Zoom()); 
   </script>
    <!-- Validation Functions   -->
   <script src="js/validation.js"></script>
   <script type="text/javascript" src ="js/validateAccident.js"></script>
   <script type="text/javascript" src ="js/validateTheft.js"></script>
-  <script type="text/javascript" src ="js/validateHazard.js"></script>  
+  <script type="text/javascript" src ="js/validateHazard.js"></script>
+  <script type="text/javascript" src ='js/report.js'></script>  
 
 </body>
 </html>
