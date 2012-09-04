@@ -1,35 +1,36 @@
 <?php 
 require "local_connection2.php";
-require "functions.php";
+include "functions.php";
 
 // Select all the rows in the markers table
-$query = "SELECT * FROM thefts WHERE 1=1";
+$query = "SELECT * FROM accidents";
 $result = mysql_query($query);
-
-
 if (!$result)
 {
     die('Invalid query : ' . mysql_error());
 }
+
 header("Content-type: text/xml");
 
 // Start XML file, echo parent node
-echo '<thefts>';
+echo '<accidents>';
 
 // Iterate through the rows adding XML nodes for each
 while ($row = @mysql_fetch_assoc($result))
 {
     // ADD TO XML DOCUMENT NODE
-    echo '<theft ';
-    echo 'date_left="' . parseToXML($row['date_left']) . '" ';
-    echo 'time_left="' . parseToXML($row['time_left']) . '" ';
-    echo 'found_date="' . parseToXML($row['found_date']) . '" ';
-    echo 'found_time="' . parseToXML($row['found_time']) . '" ';
+    echo '<accident ';
+    echo 'severity="' . parseToXML($row['severity']) . '" ';
+    echo 'vehicle="' . parseToXML($row['vehicle']) . '" ';
+    echo 'date="' . parseToXML($row['date']) . '" ';
     echo 'lat="' . $row['lat'] . '" ';
     echo 'lng="' . $row['lng'] . '" ';
+    //echo 'comment="'. parseToXML($row['comment']) . '" ';
+    echo 'time="' . parseToXML($row['time']).'" ';
+    echo 'acc_cause="' . parseToXML($row['acc_cause']) . '"';
     echo '/>';
 }
 
-echo '</thefts>';
+echo '</accidents>';
     
 ?>

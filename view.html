@@ -188,7 +188,7 @@ map.addControl(layersControl);
 
 <!-- modified the marker bit, swapped for L instead of CM.-->
 
-     downloadUrl("display2.php", function(data)
+     downloadUrl("display_accidents.php", function(data)
      {
 
             var xml = data.responseXML;
@@ -206,7 +206,7 @@ map.addControl(layersControl);
                 var point = new L.LatLng(
                     parseFloat(accidents[i].getAttribute("lat")),
                     parseFloat(accidents[i].getAttribute("lng")));
-                var html = "<p class='bubble'><b>Severity: " +severity+ "</b> <br>Vehicle: " + vehicle + "<br>Date: " + date+ "<br>Time: " +time +"<br>Cause: "+cause+ "</p>";             
+                var html = "<p class='bubble'><b>Severity: " +severity+ "</b> <br>Vehicle: " + vehicle + "<br>Date: " + date+ "<br>Time: " +time +"<br>Cause: "+cause+ "<br/>Comment: "+comment+ "</p>";             
                 var marker = new L.Marker(point, {title: 'Accident', icon: accIcon});
                 marker.bindPopup(html); //adding html information
                 accidentsLayer.addLayer(marker);  //we add the marker to the layer, simple2                                

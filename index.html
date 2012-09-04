@@ -179,7 +179,7 @@ var overlayMaps = {
 
 <!-- modified the marker bit, swapped for L instead of CM.-->
 
-     downloadUrl("display2.php", function(data)
+     downloadUrl("display_accidents.php", function(data)
      {
         var xml = data.responseXML;
         var accidents = xml.documentElement.getElementsByTagName("accident");
@@ -261,8 +261,6 @@ var overlayMaps = {
 
       function doNothing(){}
   </script>
-   <!-- Validation Functions   -->
-  <script src="js/validation_functions.js"></script>
 
 </body>
 </html>
