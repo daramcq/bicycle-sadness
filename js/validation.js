@@ -215,7 +215,7 @@ function validateAccident()
     $("#acc_lat").val(lat);
     $("#acc_lng").val(lng);
 
-    if (validateLocation("#inc_lat") && validateDate("#date") && validateTime("#left_time") && isInDublin(lat,lng))
+    if (validateLocation("#inc_lat") && validateDate("#date") && validateTime("#time") && isInDublin(lat,lng))
     {                
         var elapsed = new Date().getTime() - $("#counter").val();
         $("#counter").val(elapsed);
@@ -228,11 +228,12 @@ function validateAccident()
         
         if (!validateLocation("#inc_lat"))
             resp += "\n- Location";
-        if (!isInDublin(lat,lng))
-            resp += "\n - A location in Dublin";        
+        else if (!isInDublin(lat,lng)){
+                resp += "\n - A location in Dublin";
+            }        
         if (!validateDate("#date"))
             resp += "\n- Date";
-        if (!validateTime("#left_time"))
+        if (!validateTime("#time"))
             resp += "\n- Time";        
         alert('Report is not complete. Please enter: '+resp);
         return false;
