@@ -37,20 +37,22 @@ if (!mysql_query($sql,$con))
 mysql_close($con);
 
 ?> 
-
+<html>
 <head>
 <script type="text/javascript">
 function delayedRedirect()
 {
-    window.location = "index.php"
+    window.location = "index.html"
 }
 </script>
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="c/thanks.css" />
 </head>
-<html>
+<body>
 <div class="WideBox">
+<img src="i/logo.png"/>
 <p class="Thanks"> Thanks for reporting your bike-theft!<br> You can access our collected data on incidents, or report another incident from our home page.</p>
   </div>
 
-<!--<body onLoad="setTimeout('delayedRedirect()', 3000)">-->
+<body onLoad="setTimeout('delayedRedirect()', 3000)">
+</body>
 </html>

@@ -25,11 +25,12 @@ function validateDate(date)
 
 function validateTime(time)
 {
-    if ($(time).val()=="")
+    if ($(time).val()==''){
         return false;
-    else
+    }
+    else{
         return true;    
-
+    }
 }
 	
 
@@ -43,6 +44,19 @@ function isNumeric(n) {
     num = parseInt(n,10);
  
     return !isNaN(num);
+}
+
+function isInDublin(lat, lng){
+    var southMost = '53.17836'; 
+    var northMost = '53.633389';
+    var eastMost = '-6.04394';
+    var westMost = '-6.54665';
+    if (lat > northMost || lat < southMost || lng < eastMost || lng > westMost)
+    {        
+        return false; 
+    }
+    else
+        return true;
 }
  
 function padZero(n) {
@@ -184,10 +198,8 @@ function padZero(n) {
                     }
                 }
             }
- 
             mn = 0;
         }
- 
         if (hr==24) {
             hr=0;
             mode="AM";
@@ -195,4 +207,107 @@ function padZero(n) {
         ctl.value=hr+":"+padZero(mn)+" "+mode;
     }
 } 
+function validateAccident()
+{
+
+    var lat = $("#inc_lat").val();
+    var lng = $("#inc_lng").val();
+    $("#acc_lat").val(lat);
+    $("#acc_lng").val(lng);
+
+    if (validateLocation("#inc_lat") && validateDate("#date") && validateTime("#left_time") && isInDublin(lat,lng))
+    {                
+        var elapsed = new Date().getTime() - $("#counter").val();
+        $("#counter").val(elapsed);
+                
+        return true;
+    }
+    else
+    {
+        var resp = " ";
+        
+        if (!validateLocation("#inc_lat"))
+            resp += "\n- Location";
+        if (!isInDublin(lat,lng))
+            resp += "\n - A location in Dublin";        
+        if (!validateDate("#date"))
+            resp += "\n- Date";
+        if (!validateTime("#left_time"))
+            resp += "\n- Time";        
+        alert('Report is not complete. Please enter: '+resp);
+        return false;
+    }
+}
+
+function validateTheft()
+{
+
+    
+    var lat = $("#inc_lat").val();
+    var lng = $("#inc_lng").val();
+    $("#theft_lat").val(lat);
+    $("#theft_lng").val(lng);
+
+    if (validateLocation("#inc_lat") && validateDate("#left_date") && validateTime('#left_time_box') && validateTime('#found_time_box') && validateDate("#found_date") && isInDublin(lat,lng))
+    {
+        var elapsed = new Date().getTime() - $("#counter").val();
+        $("#counter").val(elapsed);                
+  
+        return true;
+    
+    }
+    else
+    {
+        var resp = "The report is not complete. Please enter: ";
+        
+        if (!validateLocation("#inc_lat"))
+            resp += "\n- Location";
+        if (validateLocation('#inc_lat') && !isInDublin(lat,lng))
+            resp += '\n- A location in Dublin';
+        if (!validateDate("#left_date"))
+            resp += "\n- Date left";
+        if (!validateTime('#left_time_box'))
+            resp += "\n- Time left";
+        if (!validateTime('#found_time_box'))
+            resp += "\n- Time found missing";
+        if (!validateDate("#found_date"))
+            resp += "\n- Date found missing";
+    
+        alert(resp);
+        return false;
+    }   
+}
+function validateHazard()
+{  
+
+    var lat = $("#inc_lat").val();
+    var lng = $("#inc_lng").val();
+
+    $("#haz_lat").val(lat);
+    $("#haz_lng").val(lng);
+    
+    if (validateLocation("#inc_lat") && validateDate("#date") && validateTime("#time") && validateText("#explanation") && isInDublin(lat,lng))
+    {
+        var elapsed = new Date().getTime() - $("#counter").val();
+        $("#counter").val(elapsed);
+               
+        return true;
+    }
+    else
+    {
+        var resp = "Report not completed. Please add: ";
+        if (!validateText("#explanation"))
+            resp += "\n- Explanation";
+        if (!validateLocation("#haz_lat"))
+            resp += "\n- Location";
+        if (validateLocation('#haz_lat') && !isInDublin(lat,lng))
+            resp += '\n- A location in Dublin';
+        if (!validateDate("#date"))
+            resp += "\n- Date";
+        if (!validateTime("#time"))
+            resp += "\n- Time";        
+        alert(resp);
+        return false;
+    }
+}
 

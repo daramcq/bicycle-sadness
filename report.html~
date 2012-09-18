@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="c/s.css" type="text/css">
+<title>outspoken - report</title>
+   <!-- The date and time picker scripts -->   
+		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
+		<script src="js/timepicker.js" type="text/javascript"></script>
+		<link type="text/css" rel="stylesheet" href="css/redmond/jquery-ui-1.8.18.custom.css"  />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.css" />		    	
+	<!-- ptTimeSelect files below -->
+	<link rel="stylesheet" type="text/css" href="js/jquery.ptTimeSelect.css" media="screen" />
+	<script type="text/javascript" language="JavaScript" src="js/jquery.ptTimeSelect.js"></script>
+</head>
+<body>
+<script src="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
+<div id="outside-border">
+<div id="header"><a href="index.html"><img src="i/logo.png" /></a>
+<div id="topnav">
+<ul>
+<a href="report.html"><li>Make a Report</li></a>
+<li>Map</li>
+<a href="http://bicycle-sadness.tumblr.com/" target="_blank"><li>Blog</li></a>
+<li>About Us</li>
+</ul>		
+</div><!-- /topnav -->
+</div>
+<div id="container">
+	<div id="left">
+		<div id="mapoverlay">
+		<div class="step"><p>1. Choose a type of report...</p><img src="i/accident_btn.png" id="accident_choice" /><img src="i/thieves_btn.png" id="theft_choice" style="opacity:0.4"/><img src="i/hazard_btn.png" id="general_choice" style="opacity:0.4"/>
+		<p>mouseover text</p>
+		</div>
+		<div class="step"><p>2. Place incident on the map...</p><img src="i/map_place.png" /></div>
+		<div class="step" id="stepthree"><p>3. Enter more details...</p><img src="i/details.png" /></div>
+		</div>
+  <input type="text" id="choice_made"></input>
+  <input type="hidden" id="inc_lat" value=""/>
+  <input type="hidden" id="inc_lng" value=""/>
+	<script type = "text/javascript" src="js/write_accident.js"></script>
+    <script type = "text/javascript" src="js/write_theft.js"></script>
+    <script type = "text/javascript" src = "js/write_hazard.js"></script>    
+		<!-- map overlay -->
+		<div id="map_canvas_large"></div>
+	</div><!-- /left --> 
+	
+	<div id="right">
+		<div id="choice_panel">
+		<img src="i/t.png" />	
+		</div><!- /stream -->
+		
+	</div><!-- /right -->
+</div><!-- container -->
+
+<div id="footer"></div>
+
+</div><!-- /outside-border -->
+<script type="text/javascript" src="http://tile.cloudmade.com/wml/latest/web-maps-lite.js"></script>
+  <script id="map_functions" type="text/javascript">
+   var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/4a7ecbf54cd74519a944efa10e330c2e/997/256/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+    maxZoom: 18
+});
+
+<!-- advanced stuff for the layers, funky-->
+var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/4a7ecbf54cd74519a944efa10e330c2e/{styleId}/256/{z}/{x}/{y}.png',
+    cloudmadeAttribution = 'OutSpoken, Dublin, 2012',
+    cloudmadeOptions = {maxZoom: 18, attribution: cloudmadeAttribution};
+
+var minimal = new L.TileLayer(cloudmadeUrl, cloudmadeOptions, {styleId: 22677}),
+    midnightCommander = new L.TileLayer(cloudmadeUrl, cloudmadeOptions, {styleId: 999});
+
+<!-- the fun begins, we create a new Layer for each cate., need to create this before we actually parse the markers-->
+	var accidentsLayer = new L.LayerGroup();
+	var theftLayer = new L.LayerGroup();
+	var hazardLayer = new L.LayerGroup();
+	
+// Define the icons to be applied to the markers
+var AccIcon = L.Icon.extend({
+    iconUrl: 'dist/images/accident.png',
+    shadowUrl: '../dist/images/marker-shadow.png',
+    iconSize: new L.Point(38, 95),
+    shadowSize: new L.Point(68, 95),
+    iconAnchor: new L.Point(22, 94),
+    popupAnchor: new L.Point(-3, -76)
+});
+
+var HazIcon = L.Icon.extend({
+    iconUrl: 'dist/images/generalhazard.png',
+    shadowUrl: 'dist/images/marker-shadow.png',
+    iconSize: new L.Point(38, 95),
+    shadowSize: new L.Point(68, 95),
+    iconAnchor: new L.Point(22, 94),
+    popupAnchor: new L.Point(-3, -76)
+});
+
+var TheftIcon = L.Icon.extend({
+    iconUrl: 'dist/images/clippers.png',
+    shadowUrl: 'dist/images/marker-shadow.png',
+    iconSize: new L.Point(38, 95),
+    shadowSize: new L.Point(68, 95),
+    iconAnchor: new L.Point(22, 94),
+    popupAnchor: new L.Point(-3, -76)
+});	
+var map = new L.Map('map_canvas_large', {
+    center: new L.LatLng(53.3649, -6.218),
+    zoom: 12,
+    layers: [minimal, accidentsLayer,theftLayer,hazardLayer]
+});
+
+<!-- Adding the controls -->
+var baseMaps = {
+    "Minimal": minimal,
+    "Night View": midnightCommander
+};
+
+var overlayMaps = {
+    "Accidents": accidentsLayer,
+    "Thefts": theftLayer,
+    "Hazards": hazardLayer
+};
+
+var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
+map.addControl(layersControl);  
+  </script>
+   <!-- Validation Functions   -->
+  <script src="js/validation.js"></script>
+  <script type="text/javascript" src ="js/validateAccident.js"></script>
+  <script type="text/javascript" src ="js/validateTheft.js"></script>
+  <script type="text/javascript" src ="js/validateHazard.js"></script>  
+
+</body>
+</html>

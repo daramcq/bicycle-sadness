@@ -1,15 +1,6 @@
 <?php 
 require "local_connection2.php";
-
-function parseToXML($htmlStr)
-{
-    $xmlStr=str_replace('<','&lt;',$htmlStr); 
-    $xmlStr=str_replace('>','&gt;',$xmlStr); 
-    $xmlStr=str_replace('"','&quot;',$xmlStr); 
-    $xmlStr=str_replace("'",'&#39;',$xmlStr); 
-    $xmlStr=str_replace("&",'&amp;',$xmlStr); 
-    return $xmlStr; 
-} 
+require "functions.php";
 
 // Open connection to db server
 $connection = mysql_connect (localhost, $username, $password);
@@ -27,7 +18,7 @@ if (!db_selected)
 }
 
 // Select all the rows in the markers table
-$query = "SELECT * FROM accidents2 WHERE 1";
+$query = "SELECT * FROM thefts WHERE 1";
 $result = mysql_query($query);
 if (!$result)
 {
@@ -37,24 +28,22 @@ if (!$result)
 header("Content-type: text/xml");
 
 // Start XML file, echo parent node
-echo '<markers>';
+echo '<thefts>';
 
 // Iterate through the rows adding XML nodes for each
 while ($row = @mysql_fetch_assoc($result))
 {
     // ADD TO XML DOCUMENT NODE
-    echo '<marker ';
-    echo 'severity="' . parseToXML($row['severity']) . '" ';
-    echo 'vehicle="' . parseToXML($row['vehicle']) . '" ';
-    echo 'date="' . parseToXML($row['date']) . '" ';
+    echo '<theft ';
+    echo 'date_left="' . parseToXML($row['date_left']) . '" ';
+    echo 'time_left="' . parseToXML($row['time_left']) . '" ';
+    echo 'found_date="' . parseToXML($row['found_date']) . '" ';
+    echo 'found_time="' . parseToXML($row['found_time']) . '" ';
     echo 'lat="' . $row['lat'] . '" ';
     echo 'lng="' . $row['lng'] . '" ';
-    echo 'comment="'. parseToXML($row['comment']) . '" ';
-    echo 'time="' . parseToXML($row['time']).'" ';
-    echo 'acc_cause="' . parseToXML($row['acc_cause']) . '"';
     echo '/>';
 }
 
-echo '</markers>';
+echo '</accidents>';
     
 ?>

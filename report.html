@@ -109,12 +109,14 @@ var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
 map.addControl(layersControl);
 map.addControl(new L.Control.Zoom()); 
   </script>
-   <!-- Validation Functions   -->
-  <script src="js/validation.js"></script>
-  <script type="text/javascript" src ="js/validateAccident.js"></script>
-  <script type="text/javascript" src ="js/validateTheft.js"></script>
-  <script type="text/javascript" src ="js/validateHazard.js"></script>
+  <script type="text/javascript" src ="js/validation.js"></script>
   <script type="text/javascript" src ='js/report.js'></script>  
+  <script type="text/javascript">
+$(document).ready(function(){
+  $('#inc_lat').val('');
+  $('#inc_lng').val('');
+});
+  </script>
 
 </body>
 </html>

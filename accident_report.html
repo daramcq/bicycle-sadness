@@ -1,5 +1,5 @@
 <h1>Accident Details</h1>
-<form name ="acc_info" action="insert_accident.php" onsubmit="return validateAccident();" method ="post">
+<form name ="acc_info" action="insert_accident.php" onsubmit='return validateAccident();'method ="post">
 <input id = "counter" name="counter" type="hidden">
 <input name ="current_lat" type = "hidden" id="acc_lat" value=""/>
 <input name ="current_lng" type = "hidden" id="acc_lng" value=""/> 
@@ -36,9 +36,9 @@
 <h2>Time of Accident:</h2>
 <input id="time" name="time" type="text" autocomplete="off" onblur="timeValidate(this);">
 <script type="text/javascript">
-$('#time').ptTimeSelect();
+	$('#time').ptTimeSelect();
 </script>
 <h2>Cause of Accident - Detailed:</h2>
 <textarea name="comment" autocomplete="off" cols="31" rows="4"></textarea>
-<input type="submit" value="Submit" onsubmit="/"> 
+<input id='submitAccident' type="submit" value="Submit"> 
 </form>

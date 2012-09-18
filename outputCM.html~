@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title>Bicycle Sadness - Accident Report Map </title>
+  <title>Outspoke - Cycling Information Map </title>
 </head>
 <body>
 
@@ -23,31 +23,68 @@
     map.addControl(new CM.OverviewMapControl());
     
      <!-- set the centre point of the map -->
-    map.setCenter(dublinLocation, 10);
     var dublinLocation = new CM.LatLng(53.345171, -6.275854);
+    map.setCenter(dublinLocation, 12);
+    
 
 
      downloadUrl("display2.php", function(data)
          {
             var xml = data.responseXML;
-            var markers = xml.documentElement.getElementsByTagName("marker");
-            for (var i = 0; i < markers.length; i++)
+            var accidents = xml.documentElement.getElementsByTagName("accident");
+            for (var i = 0; i < accidents.length; i++)
             {
-                var severity = markers[i].getAttribute("severity");
-                var vehicle = markers[i].getAttribute("vehicle");
-                var time = markers[i].getAttribute("time");
-                var date = markers[i].getAttribute("date");
-                var comment = markers[i].getAttribute("comment");
-                var cause = markers[i].getAttribute("acc_cause");
+                var severity = accidents[i].getAttribute("severity");
+                var vehicle = accidents[i].getAttribute("vehicle");
+                var time = accidents[i].getAttribute("time");
+                var date = accidents[i].getAttribute("date");
+                var comment = accidents[i].getAttribute("comment");
+                var cause = accidents[i].getAttribute("acc_cause");
                 var point = new CM.LatLng(
-                    parseFloat(markers[i].getAttribute("lat")),
-                    parseFloat(markers[i].getAttribute("lng")));
+                    parseFloat(accidents[i].getAttribute("lat")),
+                    parseFloat(accidents[i].getAttribute("lng")));
                 var html = "<b>Severity: " +severity+ "</b> <br>Vehicle: " + vehicle + "<br>Date: " + date+ "<br>Time: " +time +"<br>Cause: "+cause+ "<br>Comment: " +comment;                 
                 var marker = new CM.Marker(point, { title: severity });
                 map.addOverlay(marker);
                 marker.openInfoWindow(html);                                     
                }
             });
+            
+         downloadUrl("display_theft.php", function(data)
+         {
+            var xml = data.responseXML;
+            var thefts = xml.documentElement.getElementsByTagName("theft");
+            for (var i = 0; i < thefts.length; i++)
+            {
+                var date_left = thefts[i].getAttribute("date_left");
+                var time_left = thefts[i].getAttribute("time_left");
+                var found_date = thefts[i].getAttribute("found_date");                
+                var point = new CM.LatLng(
+                    parseFloat(thefts[i].getAttribute("lat")),
+                    parseFloat(thefts[i].getAttribute("lng")));
+                var html = date_left+ " " +found_date;                 
+                var marker = new CM.Marker(point, { title: 'theft' });
+                map.addOverlay(marker);
+                marker.openInfoWindow(html);                                     
+               }
+            });
+         downloadUrl("display_hazards.php", function(data)
+         {
+            var xml = data.responseXML;
+            var hazards = xml.documentElement.getElementsByTagName("hazard");
+            for (var i = 0; i < hazards.length; i++)
+            {
+                var date = hazards[i].getAttribute("date");
+                var time = hazards[i].getAttribute("time");
+                var explanation = hazards[i].getAttribute("explanation");                
+                var point = new CM.LatLng(
+                    parseFloat(hazards[i].getAttribute("lat")),
+                    parseFloat(hazards[i].getAttribute("lng")));                     
+                var marker = new CM.Marker(point, { title: 'hazard' });
+                map.addOverlay(marker);
+                marker.openInfoWindow(explanation);                                     
+               }
+            });        
             
       function downloadUrl(url,callback)
       {
@@ -69,11 +106,6 @@
          }  
           function doNothing(){}
    
-
-
-
-
-
   </script>
 
   <div id="message">Drag or click the map.</div>

@@ -1,19 +1,29 @@
 <h1>Theft Details</h1>
-       <form name ="theft_info" action="insert_theft.php" onsubmit="return validateForm();" method ="post">
-        <input name ="current_lat" id="inc_lat" value=""/>
-        <input name ="current_lng" id="inc_lng" value=""/> 
-        <input id = "acc_hour" name="hours" value=""/>
-        <input id = "acc_min" name="min"value=""/>
+       <form name ="theft_info" action="insert_theft.php" onsubmit="return validateTheft();" method ="post">
+        <input name ="current_lat" id="theft_lat" value=""/>
+        <input name ="current_lng" id="theft_lng" value=""/>       
         <input id = "counter" name="counter">
-        Date of Accident:
+        Date Left:
         <br>
-        <input id="date" type="text" name="date" autocomplete="off" value="">
-  <script type="text/javascript" src ="js/datepicker.js"></script>
+        <input id="left_date" type="text" autocomplete="off" value="">
+  <script type="text/javascript">$('#left_date').datepicker();</script>
       <br>
-      Time of Accident
-     <input id="time" type="text" autocomplete="off"value=""onblur="timeValidate(this)"/>
-        <br>
-        <br>
-        <input type="submit" value="Submit" onsubmit="/"> 
+      Time Left:
+     <input id="time_left" name="time_left" type="text" autocomplete="off"value=""onblur="timeValidate(this)"/>
+     <script type="text/javascript"> $('#time_left').ptTimeSelect();</script>
+     <br>
+     Date Found Missing:
+     <br>
+     <input id="found_date" type="text" name="found_date" autocomplete="off" value="">
+     <script type="text/javascript">$('#found_date').datepicker();</script>
+     <br>
+     Time Found Missing:
+     <input id="time_found" type="text" name="time_found"autocomplete="off"value=""onblur="timeValidate(this)"/>
+     <script type="text/javascript">
+    $('#time_found').ptTimeSelect();
+    </script>
+     <br>
+     <br>
+     <input type="submit" value="Submit" onsubmit="/"> 
         
         </form>

@@ -1,5 +1,12 @@
 function validateAccident()
 {
+    var lat = $("#inc_lat").val();
+    var lng = $("#inc_lng").val();
+    if (!isInDublin(lat,lng))
+    {
+        alert ('Not in Dublin');
+        return false;
+    }
     if (validateLocation("#inc_lat") && checkRadio("acc_info","severity") && checkRadio("acc_info","vehicle") && checkRadio("acc_info","cause") && validateDate("#date") && validateTime("#time"))
     {                
         var elapsed = new Date().getTime() - $("#counter").val();

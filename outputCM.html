@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title>Bicycle Sadness - Accident Report Map </title>
+  <title>Outspoken - Cycling Information Map </title>
 </head>
 <body>
 
@@ -24,7 +24,7 @@
     
      <!-- set the centre point of the map -->
     var dublinLocation = new CM.LatLng(53.345171, -6.275854);
-    map.setCenter(dublinLocation, 10);
+    map.setCenter(dublinLocation, 12);
     
 
 
@@ -79,11 +79,10 @@
                 var explanation = hazards[i].getAttribute("explanation");                
                 var point = new CM.LatLng(
                     parseFloat(hazards[i].getAttribute("lat")),
-                    parseFloat(hazards[i].getAttribute("lng")));
-                var html = date_left+ " " +found_date;                 
+                    parseFloat(hazards[i].getAttribute("lng")));                     
                 var marker = new CM.Marker(point, { title: 'hazard' });
                 map.addOverlay(marker);
-                marker.openInfoWindow(html);                                     
+                marker.openInfoWindow(explanation);                                     
                }
             });        
             
@@ -107,11 +106,6 @@
          }  
           function doNothing(){}
    
-
-
-
-
-
   </script>
 
   <div id="message">Drag or click the map.</div>

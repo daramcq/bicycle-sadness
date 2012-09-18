@@ -20,7 +20,7 @@ echo "<h1>" . $time . "</h1>" ;
 
 $sql="INSERT INTO accidents2 (severity, vehicle, date, time, lat, lng, comment, elapsed, acc_cause)
 VALUES
-('$_POST[severity]','$_POST[vehicle]','$_POST[date]','$time','$_POST[current_lat]','$_POST[current_lng]', '$_POST[comment]', '$elapsed', '$_POST[cause]')";
+('$_POST[severity]','$_POST[vehicle]','$_POST[date]','$time','$_POST[current_lat]','$_POST[current_lng]', '$desc', '$elapsed', '$_POST[cause]')";
 
 
 
@@ -36,21 +36,22 @@ mysql_close($con)
 
 ?> 
 
+<html>
 <head>
 <script type="text/javascript">
 function delayedRedirect()
 {
-    window.location = "index.php"
+    window.location = "index.html"
 }
 </script>
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="c/thanks.css" />
 </head>
-<html>
+<body>
 <div class="WideBox">
+<img src="i/logo.png"/>
 <p class="Thanks"> Thanks for reporting your cycling accident or near-miss!<br> You can access our collected data on incidents, or report another incident from our home page.</p>
   </div>
 
 <body onLoad="setTimeout('delayedRedirect()', 3000)">
-
-
+</body>
 </html>

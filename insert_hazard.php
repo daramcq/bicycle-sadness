@@ -35,11 +35,21 @@ mysql_close($con);
 
 
 <html>
+<head>
+<script type="text/javascript">
+function delayedRedirect()
+{
+    window.location = "index.html"
+}
+</script>
+<link rel="stylesheet" type="text/css" href="c/thanks.css" />
+</head>
+<body>
 <div class="WideBox">
-<p class="Thanks"> Thanks for reporting the hazard.<br> You can access our collected data on incidents, or report another incident from our home page, where you are now being redirected.</p>
+<img src="i/logo.png"/>
+<p class="Thanks"> Thanks for reporting this hazard.<br> You can access our collected data on incidents, or report another incident from our home page.</p>
   </div>
 
-<!--<body onLoad="setTimeout('delayedRedirect()', 3000)">-->
-
-
+<body onLoad="setTimeout('delayedRedirect()', 3000)">
+</body>
 </html>

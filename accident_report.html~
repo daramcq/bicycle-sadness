@@ -1,0 +1,60 @@
+<h1>Accident Details
+        </h1>
+       <form name ="acc_info" action="insert_accident.php" onsubmit="return validateAccident();" method ="post">
+
+        <input id = "counter" name="counter" type="hidden">
+        <input name ="current_lat" type = "hidden" id="acc_lat" value=""/>
+        <input name ="current_lng" type = "hidden" id="acc_lng" value=""/> 
+        Severity of accident
+        <br>                        
+        <select name="severity">
+        <option value="near_miss">Near-Miss</option>
+        <option value="light">Light</option>
+        <option value="moderate">Moderate</option>
+        <option value="severe">Severe</option>
+        </select>
+        <br>
+        <br>
+        Type of Vehicles Involved:
+        <br>
+        <select name="vehicle">
+        <option value="car">Car</option>
+        <option value="taxi">Taxi</option>
+        <option value="bus">Bus</option>
+        <option value="truck">Truck</option>
+        <option value="van">Van</option>
+        <option value="motorbike">Motorbike</option>
+        <option value="cyclist">Cyclist</option>
+        </select>
+        <br>
+        Cause of Accident:
+        <br>
+        <select name="vehicle">
+        <option value="vehicle_left_turn">Vehicle Turning Left</option>
+        <option value="vehicle_lane_change"/>Vehicle Changing Lane</option>
+        <option value="vehicle_overtaking"/>Vehicle Overtaking</option>
+        <option value="cyclist_right_turn"/>Cyclist Turning Right</option>
+        <option value="vehicle_door"/> Vehicle Door Opening</option>
+        <option value="vehicle_stop"/> Vehicle Stopping Suddenly</option>
+        <option value="other"/> Other- Please specify Below</option>        
+        <br>
+        Date of Accident:
+        <br>
+        <input id="date" type="text" name="date" autocomplete="off" value="">
+  <script type="text/javascript">$('#date').datepicker();</script>
+      <br>
+      Time of Accident
+     <input id="time" name="time" type="text" autocomplete="off" onblur="timeValidate(this);">
+     <script type="text/javascript">
+    $('#time').ptTimeSelect();
+    </script>
+        <br>
+        <br>
+        Cause of Accident - Detailed
+        <textarea name="comment" autocomplete="off" cols="31" rows="4"></textarea>
+        <br>
+        <br>
+
+        <input type="submit" value="Submit" onsubmit="/"> 
+        
+        </form>
