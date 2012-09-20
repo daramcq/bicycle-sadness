@@ -219,6 +219,7 @@ function validateAccident()
     {                
         var elapsed = new Date().getTime() - $("#counter").val();
         $("#counter").val(elapsed);
+        convertTime('#time');
                 
         return true;
     }
@@ -253,7 +254,9 @@ function validateTheft()
     {
         var elapsed = new Date().getTime() - $("#counter").val();
         $("#counter").val(elapsed);                
-  
+        convertTime('#left_time_box');
+        convertTime('#found_time_box');
+
         return true;
     
     }
@@ -286,11 +289,12 @@ function validateHazard()
 
     $("#haz_lat").val(lat);
     $("#haz_lng").val(lng);
-    
+
     if (validateLocation("#inc_lat") && validateDate("#date") && validateTime("#time") && validateText("#explanation") && isInDublin(lat,lng))
     {
         var elapsed = new Date().getTime() - $("#counter").val();
         $("#counter").val(elapsed);
+        convertTime('#time');
                
         return true;
     }
@@ -310,5 +314,17 @@ function validateHazard()
         alert(resp);
         return false;
     }
+}
+function convertTime(time_box){
+    var time = $(time_box).val();
+    var hour = time.split(":");
+    if (hour[1].indexOf('PM')!=-1){
+      hour[0] = parseInt(hour[0]) + 12;
+      hour[0] = hour[0].toString();
+    }
+    var mins = hour[1].split(' ');
+
+    $(time_box).val(hour[0]+':'+ mins[0]);
+
 }
 
