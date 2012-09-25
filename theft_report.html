@@ -4,10 +4,10 @@
 <input type="hidden" name ="current_lng" id="theft_lng" value=""/>       
 <input type="hidden" id = "counter" name="counter">
 <h2>Date Left:</h2>
-<input id="left_date" type="text" autocomplete="off" value="">
+<input id="left_date" type="text" name="left_date" autocomplete="off" value="">
 <script type="text/javascript">$('#left_date').datepicker();</script>
 <h2>Time Left:</h2>
-<input id="left_time" name="time_left" type="text" autocomplete="off" value="" onblur="timeValidate(this)"/>
+<input id="left_time" type="text" autocomplete="off" value="" onblur="timeValidate(this)"/>
 <script type="text/javascript"> 
 	$('#left_time').ptTimeSelect({
 		onClose: function(i){
@@ -22,7 +22,7 @@
 	$('#found_date').datepicker();
 </script>
 <h2>Time Found Missing:</h2>
-<input id="found_time" type="text" name="time_found"autocomplete="off" value="" onblur="timeValidate(this)"/>
+<input id="found_time" type="text" autocomplete="off" value="" onblur="timeValidate(this)"/>
 <script type="text/javascript"> 
 	$('#found_time').ptTimeSelect({
 		onClose: function(i){
@@ -31,7 +31,7 @@
 		}
 	});
 </script>
-<input type='hidden' id='left_time_box' value=''/>
-<input type='hidden' id='found_time_box' value=''/>
+<input type='hidden' id='left_time_box' name='left_time' value=''/>
+<input type='hidden' id='found_time_box' name='found_time' value=''/>
 <input type="submit" value="Submit" onsubmit="/"> 
 </form>

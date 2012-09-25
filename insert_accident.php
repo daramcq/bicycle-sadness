@@ -2,25 +2,10 @@
 // Database Connection
 include 'local_connection2.php';
 
-$severity_info = $_POST['severity'];
-$lat = $_POST['current_lat'];
-$lng = $_POST['current_lng'];
-$desc = $_POST['comment'];
-$time = $_POST['time'];
-$elapsed = $_POST['counter'];
 
-if (strpos($time, 'PM'))
-{
-    $hour = substr($time,0,2) + 12;
-    $min = substr($time,2,2);
-    $time = $hour . ":" . $min;       
-}  
-
-echo "<h1>" . $time . "</h1>" ;
-
-$sql="INSERT INTO accidents2 (severity, vehicle, date, time, lat, lng, comment, elapsed, acc_cause)
+$sql="INSERT INTO accidents (severity, vehicle, date, time, lat, lng, comment, elapsed, acc_cause)
 VALUES
-('$_POST[severity]','$_POST[vehicle]','$_POST[date]','$time','$_POST[current_lat]','$_POST[current_lng]', '$desc', '$elapsed', '$_POST[cause]')";
+('$_POST[severity]','$_POST[vehicle]','$_POST[date]','$_POST[time]','$_POST[current_lat]','$_POST[current_lng]', '$_POST[comment]', '$_POST[counter]', '$_POST[cause]')";
 
 
 
@@ -32,7 +17,7 @@ if (!mysql_query($sql,$con))
   }
 
 
-mysql_close($con)
+mysql_close($con);
 
 ?> 
 

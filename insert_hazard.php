@@ -12,16 +12,8 @@ function delayedRedirect()
 // Database Connection
 include 'local_connection2.php';
 
-$time = $_POST['time'];
-$lat = $_POST['current_lat'];
-if (strpos($time, 'PM'))
-{
-    $hour = substr($time,0,2) + 12;
-    $min = substr($time,2,2);
-    $time = $hour . ":" . $min;       
-} 
 
-$sql="INSERT INTO hazards (lat, lng, explanation, date, time) VALUES ('$_POST[current_lat]','$_POST[current_lng]','$_POST[explanation]','$_POST[date]','$time')";
+$sql="INSERT INTO hazards (lat, lng, explanation, date, time, elapsed) VALUES ('$_POST[current_lat]','$_POST[current_lng]','$_POST[explanation]','$_POST[date]','$_POST[time]','$_POST[counter]')";
 
 $go = "thanks.php";
 if (!mysql_query($sql,$con))
