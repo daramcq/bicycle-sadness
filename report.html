@@ -30,28 +30,28 @@
   <div id="container">
   	<div id="left">
   		<div id="mapoverlay">
-    		<div class="step">
-          <p>1. Choose a type of report...</p>
-          <img src="i/accident_btn.png" id='accident_choice'/>
-          <img src="i/thieves_btn.png" id="theft_choice"/>
-          <img src="i/hazard_btn.png" id="general_choice"/>
-    		  <p id='mouseover'></p>
+		<div class="step">
+		  <p>1. Choose a type of report...</p>
+		  <img src="i/accident_btn.png" id='accident_choice'/>
+		  <img src="i/thieves_btn.png" id="theft_choice"/>
+		  <img src="i/hazard_btn.png" id="general_choice"/>
+		  <p id='mouseover'></p>
     		</div>
     		<div class="step">
-          <p>2. Place incident on the map...</p>
-          <img src="i/map_place.png" />
-        </div>
+		  <p>2. Place incident on the map...</p>
+		  <img src="i/map_place.png" />
+		</div>
     		<div class="step" id="stepthree">
-          <p>3. Enter more details...</p>
-          <img src="i/details.png" />
-        </div>
-  		</div>
-      <input type="text" id="choice_made" value=""/>
-      <input type="hidden" id="inc_lat" value=""/>
-      <input type="hidden" id="inc_lng" value=""/>
-    <script type = "text/javascript" src="js/write_accident.js"></script>
-      <script type = "text/javascript" src="js/write_theft.js"></script>
-      <script type = "text/javascript" src = "js/write_hazard.js"></script>    
+		  <p>3. Enter more details...</p>
+		  <img src="i/details.png" />
+		</div>
+		</div>
+		<input type="hidden" id="choice_made" value=""/>
+		<input type="hidden" id="inc_lat" value=""/>
+		<input type="hidden" id="inc_lng" value=""/>
+		<script type = "text/javascript" src="js/write_accident.js"></script>
+		<script type = "text/javascript" src="js/write_theft.js"></script>
+		<script type = "text/javascript" src = "js/write_hazard.js"></script>    
   		<!-- map overlay -->
   		<div id="map_canvas_large"></div>
   	</div><!-- /left --> 
@@ -111,15 +111,13 @@ map.addControl(new L.Control.Zoom());
   </script>
   <script type="text/javascript" src ="js/validation.js"></script>
   <script type="text/javascript" src ='js/report.js'></script>  
-<<<<<<< HEAD
-=======
-  <script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function(){
-  $('#inc_lat').val('');
-  $('#inc_lng').val('');
+$('#inc_lat').val('');
+$('#inc_lng').val('');
+$('#choice_made').val("");
+
 });
   </script>
- 
->>>>>>> da839a879953d6ad44ba24026b13dfa4e4350f4d
 </body>
 </html>

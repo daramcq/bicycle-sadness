@@ -14,12 +14,19 @@ function validateLocation(loc)
         return true;
 }
 
-function validateDate(date)
-{
-    if ($(date).val()=="")
+function validateDate(date){
+    if ($(date).val()==""){
         return false;
-    else
-        return true;    
+    }else{
+	var set_date = $('#date').datepicker("getDate");
+	var cur_date = new Date();
+	if (set_date > cur_date){
+	    return false;
+	}else if (cur_date > set_date){
+	    return true;
+	}
+	else{}
+    }
 }
 
 
@@ -34,8 +41,7 @@ function validateTime(time)
 }
 	
 
-function isDigit(c) 
-{ 
+function isDigit(c) { 
     return ((c=='0')||(c=='1')||(c=='2')||(c=='3')||(c=='4')||(c=='5')||(c=='6')||(c=='7')||(c=='8')||(c=='9'));
 }
  
@@ -207,14 +213,12 @@ function padZero(n) {
         ctl.value=hr+":"+padZero(mn)+" "+mode;
     }
 } 
-function validateAccident()
-{
+function validateAccident(){
 
     var lat = $("#inc_lat").val();
     var lng = $("#inc_lng").val();
     $("#acc_lat").val(lat);
     $("#acc_lng").val(lng);
-    alert($('#date').getDate());
 
     if (validateLocation("#inc_lat") && validateDate("#date") && validateTime("#time") && isInDublin(lat,lng))
     {                

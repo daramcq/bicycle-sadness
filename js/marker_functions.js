@@ -19,7 +19,6 @@ function placeMarker(position,map) {
           map.addLayer(myMarker);
           getLocation(myMarker, map);
           markerCount = 1;
-	  alert(markerCount);
           myMarker.on('dragend', function(){
 	      getLocation(myMarker,map);
 	  });
