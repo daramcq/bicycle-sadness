@@ -214,6 +214,7 @@ function validateAccident()
     var lng = $("#inc_lng").val();
     $("#acc_lat").val(lat);
     $("#acc_lng").val(lng);
+    alert($('#date').getDate());
 
     if (validateLocation("#inc_lat") && validateDate("#date") && validateTime("#time") && isInDublin(lat,lng))
     {                
