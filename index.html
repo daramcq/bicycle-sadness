@@ -113,10 +113,18 @@ var minimal = new L.TileLayer(cloudmadeUrl, cloudmadeOptions, {styleId: 22677}),
 var AccIcon = L.Icon.extend({
     iconUrl: 'dist/images/accident.png',
     shadowUrl: '../dist/images/marker-shadow.png',
-    iconSize: new L.Point(30, 45),
-   // shadowSize: new L.Point(30, 55),
+    options : {
+        iconSize: [30, 45],
+    shadowSize: [30, 45],
+    iconAnchor: [150, 44],
+    shadowAnchor: [15, 44],
+    popupAnchor: [15, -4] 
+    }
+    
+/*    iconSize: new L.Point(30, 45),
+    shadowSize: new L.Point(30, 55),
     iconAnchor: new L.Point(22, 94),
-    popupAnchor: new L.Point(-3, -76)
+    popupAnchor: new L.Point(-3, -76) Deprecated, was giving the "jumping icons grief" */
 
 }); 
 
@@ -128,10 +136,10 @@ var HazIcon = L.Icon.extend({
 
     iconUrl: 'dist/images/generalhazard.png',
     shadowUrl: 'dist/images/marker-shadow.png',
-    iconSize: new L.Point(30, 45),
-   // shadowSize: new L.Point(68, 95),
+/*    iconSize: new L.Point(30, 45),
+    shadowSize: new L.Point(30, 55),
     iconAnchor: new L.Point(22, 94),
-    popupAnchor: new L.Point(-3, -76)
+    popupAnchor: new L.Point(-3, -76) Deprecated, was giving the "jumping icons grief" */
 });
 
  
@@ -143,10 +151,10 @@ var TheftIcon = L.Icon.extend({
 
     iconUrl: 'dist/images/clippers.png',
     shadowUrl: 'dist/images/marker-shadow.png',
-    iconSize: new L.Point(30, 45),
-   // shadowSize: new L.Point(30, 45),
+/*    iconSize: new L.Point(30, 45),
+    shadowSize: new L.Point(30, 55),
     iconAnchor: new L.Point(22, 94),
-    popupAnchor: new L.Point(-3, -76)
+    popupAnchor: new L.Point(-3, -76) Deprecated, was giving the "jumping icons grief" */
 
 });
 
