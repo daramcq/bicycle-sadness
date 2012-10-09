@@ -182,22 +182,18 @@ var overlayMaps = {
     "Hazards": hazardLayer
 };
  
-
 var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
-map.addControl(layersControl);
 
+map.addControl(layersControl);
 
 <!-- modified the marker bit, swapped for L instead of CM.-->
 
      downloadUrl("display_accidents.php", function(data)
      {
-
             var xml = data.responseXML;
             var accidents = xml.documentElement.getElementsByTagName("accident");
             for (var i = 0; i < accidents.length; i++)
-
             {
-
                 var severity = accidents[i].getAttribute("severity");
                 var vehicle = accidents[i].getAttribute("vehicle");
                 var time = accidents[i].getAttribute("time");
@@ -215,88 +211,79 @@ map.addControl(layersControl);
 
             });
 
- 
+    map.addLayer(accidentsLayer); //insert the Layer Accidents into map.           
+     
+     downloadUrl("display_theft.php", function(data)
+     {
+        var xml = data.responseXML;
+        var thefts = xml.documentElement.getElementsByTagName("theft");
+        for (var i = 0; i < thefts.length; i++)
+        {
+            var date_left = thefts[i].getAttribute("date_left");
+            var time_left = thefts[i].getAttribute("time_left");
+            var found_date = thefts[i].getAttribute("found_date");
+            var point = new L.LatLng(
+                parseFloat(thefts[i].getAttribute("lat")),
+                parseFloat(thefts[i].getAttribute("lng")));
+            var html = "<p class='bubble'>Date Left: " + date_left + "<br> Time: " + time_left +"<br>Date Found: " + found_date + "</p>";   
+            var marker = new L.Marker(point,{title: 'Accident', icon: theftIcon});
+            marker.bindPopup(html) //adding html information
+            theftLayer.addLayer(marker);                                     
+           }
+        });
+    
+     map.addLayer(theftLayer);  
 
-        map.addLayer(accidentsLayer); //insert the Layer Accidents into map.           
-         
+     downloadUrl("display_hazards.php", function(data)
+     {
+        var xml = data.responseXML;
+        var hazards = xml.documentElement.getElementsByTagName("hazard");
+        for (var i = 0; i < hazards.length; i++)
+        {
+            var date = hazards[i].getAttribute("date");
+            var time = hazards[i].getAttribute("time");
+            var explanation = hazards[i].getAttribute("explanation");               
+            var point = new L.LatLng(
+                parseFloat(hazards[i].getAttribute("lat")),
+                parseFloat(hazards[i].getAttribute("lng")));                               
+            var marker = new L.Marker(point, {icon: hazIcon});
+            var html = "<p class='bubble'>Date: " + date + "<br> Time: " + time +"<br>Explanation: " + explanation + "</p>";   
+            marker.bindPopup(html); //adding html information
+            hazardLayer.addLayer(marker);                                    
+           }
+        });    
 
-         downloadUrl("display_theft.php", function(data)
+      map.addLayer(hazardLayer);  
 
-         {
+  function downloadUrl(url,callback)
+  {
+    var request = window.ActiveXObject ?
 
-            var xml = data.responseXML;
+      new ActiveXObject('Microsoft.XMLHTTP') :
+      new XMLHttpRequest;
 
-            var thefts = xml.documentElement.getElementsByTagName("theft");
-
-            for (var i = 0; i < thefts.length; i++)
-
-            {
-
-                var date_left = thefts[i].getAttribute("date_left");
-                var time_left = thefts[i].getAttribute("time_left");
-                var found_date = thefts[i].getAttribute("found_date");
-                var point = new L.LatLng(
-                    parseFloat(thefts[i].getAttribute("lat")),
-                    parseFloat(thefts[i].getAttribute("lng")));
-                var html = "<p class='bubble'>"+date_left+ " " +found_date+"</p>";
-                var marker = new L.Marker(point,{title: 'Accident', icon: theftIcon});
-                marker.bindPopup(html) //adding html information
-                theftLayer.addLayer(marker);                                     
-               }
-            });
-        
-         map.addLayer(theftLayer);  
-
-         downloadUrl("display_hazards.php", function(data)
-         {
-            var xml = data.responseXML;
-            var hazards = xml.documentElement.getElementsByTagName("hazard");
-            for (var i = 0; i < hazards.length; i++)
-            {
-                var date = hazards[i].getAttribute("date");
-                var time = hazards[i].getAttribute("time");
-                var explanation = hazards[i].getAttribute("explanation");               
-                var point = new L.LatLng(
-                    parseFloat(hazards[i].getAttribute("lat")),
-                    parseFloat(hazards[i].getAttribute("lng")));                               
-                var marker = new L.Marker(point, {icon: hazIcon});
-                var html = "<p class='bubble'>"+explanation+"</p>"
-                marker.bindPopup(html); //adding html information
-                hazardLayer.addLayer(marker);                                    
-               }
-            });    
-
-          map.addLayer(hazardLayer);  
-
-      function downloadUrl(url,callback)
+      request.onreadystatechange = function()
       {
-        var request = window.ActiveXObject ?
 
-          new ActiveXObject('Microsoft.XMLHTTP') :
-          new XMLHttpRequest;
+        if (request.readyState == 4)
 
-          request.onreadystatechange = function()
-          {
+        {
 
-            if (request.readyState == 4)
+            request.onreadystatechange = doNothing;
 
-            {
+            callback(request, request.status);
 
-                request.onreadystatechange = doNothing;
+        }
 
-                callback(request, request.status);
+       };
 
-            }
+       request.open('GET', url, true);
 
-           };
+       request.send(null);
 
-           request.open('GET', url, true);
+     } 
 
-           request.send(null);
-
-         } 
-
-          function doNothing(){}
+      function doNothing(){}
  
 
   </script>
