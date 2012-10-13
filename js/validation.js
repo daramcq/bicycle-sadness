@@ -18,7 +18,7 @@ function validateDate(date){
     if ($(date).val()==""){
         return false;
     }else{
-	var set_date = $('#date').datepicker("getDate");
+	var set_date = $(date).datepicker("getDate");
 	var cur_date = new Date();
 	if (set_date > cur_date){
 	    return false;
