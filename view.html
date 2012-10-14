@@ -30,33 +30,7 @@
 	<div id="right">
 		<div id="stream">
 		<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
-<script>
-new TWTR.Widget({
-  version: 2,
-  type: 'profile',
-  rpp: 2,
-  interval: 30000,
-  width: 190,
-  height: 100,
-  theme: {
-    shell: {
-      background: '#333333',
-      color: '#ffffff'
-    },
-    tweets: {
-      background: '#000000',
-      color: '#ffffff',
-      links: '#cccccc'
-    }
-  },
-  features: {
-    scrollbar: false,
-    loop: false,
-    live: false,
-    behavior: 'all'
-  }
-}).render().setUser('OutSpokenDublin').start();
-</script>
+
 		</div><!- /stream -->
 
 		<div id="appwidgets">
@@ -67,28 +41,15 @@ new TWTR.Widget({
 	</div><!-- /right -->
 </div><!-- container -->
 
-<div id="footer"></div>
+    <div id="footer"></div>
 
 </div><!-- /outside-border -->
 <script type="text/javascript" src="http://tile.cloudmade.com/wml/latest/web-maps-lite.js"></script>
 
-  <script> <!-- you were right, we need to modify, but should be simple :)-->
-
-<!-- simple1: http://leaflet.cloudmade.com/examples/quick-start.html-->
-
-<!-- tutorial commands to create "disp" folder, will push it too-->
-
- 
-
-       
-
-       
-
+<script>
         var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/4a7ecbf54cd74519a944efa10e330c2e/997/256/{z}/{x}/{y}.png', {
-
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="http://cloudmade.com">CloudMade</a>',
-
-    maxZoom: 18
+            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="http://cloudmade.com">CloudMade</a>',
+          maxZoom: 18
 
 });
 
@@ -186,14 +147,10 @@ var layersControl = new L.Control.Layers(baseMaps, overlayMaps);
 
 map.addControl(layersControl);
 
-<!-- modified the marker bit, swapped for L instead of CM.-->
-
-     downloadUrl("display_accidents.php", function(data)
-     {
+     downloadUrl("display_accidents.php", function(data){
             var xml = data.responseXML;
             var accidents = xml.documentElement.getElementsByTagName("accident");
-            for (var i = 0; i < accidents.length; i++)
-            {
+            for (var i = 0; i < accidents.length; i++){
                 var severity = accidents[i].getAttribute("severity");
                 var vehicle = accidents[i].getAttribute("vehicle");
                 var time = accidents[i].getAttribute("time");
@@ -213,19 +170,18 @@ map.addControl(layersControl);
 
     map.addLayer(accidentsLayer); //insert the Layer Accidents into map.           
      
-     downloadUrl("display_theft.php", function(data)
-     {
+     downloadUrl("display_theft.php", function(data){
         var xml = data.responseXML;
         var thefts = xml.documentElement.getElementsByTagName("theft");
-        for (var i = 0; i < thefts.length; i++)
-        {
+        for (var i = 0; i < thefts.length; i++){
             var date_left = thefts[i].getAttribute("date_left");
             var time_left = thefts[i].getAttribute("time_left");
             var found_date = thefts[i].getAttribute("found_date");
+            var found_time = thefts[i].getAttribute("found_time");
             var point = new L.LatLng(
                 parseFloat(thefts[i].getAttribute("lat")),
                 parseFloat(thefts[i].getAttribute("lng")));
-            var html = "<p class='bubble'>Date Left: " + date_left + "<br> Time: " + time_left +"<br>Date Found: " + found_date + "</p>";   
+            var html = "<p class='bubble'>Date Left: " + date_left + "<br> Time Left: " + time_left +"<br>Date Found: " + found_date + "<br>Time Found Missing: " +found_time+"</p>";   
             var marker = new L.Marker(point,{title: 'Accident', icon: theftIcon});
             marker.bindPopup(html) //adding html information
             theftLayer.addLayer(marker);                                     
@@ -234,12 +190,10 @@ map.addControl(layersControl);
     
      map.addLayer(theftLayer);  
 
-     downloadUrl("display_hazards.php", function(data)
-     {
+     downloadUrl("display_hazards.php", function(data) {
         var xml = data.responseXML;
         var hazards = xml.documentElement.getElementsByTagName("hazard");
-        for (var i = 0; i < hazards.length; i++)
-        {
+        for (var i = 0; i < hazards.length; i++){
             var date = hazards[i].getAttribute("date");
             var time = hazards[i].getAttribute("time");
             var explanation = hazards[i].getAttribute("explanation");               
@@ -255,47 +209,45 @@ map.addControl(layersControl);
 
       map.addLayer(hazardLayer);  
 
-  function downloadUrl(url,callback)
-  {
+  function downloadUrl(url,callback){
     var request = window.ActiveXObject ?
 
       new ActiveXObject('Microsoft.XMLHTTP') :
       new XMLHttpRequest;
 
-      request.onreadystatechange = function()
-      {
-
-        if (request.readyState == 4)
-
-        {
-
+      request.onreadystatechange = function(){
+        if (request.readyState == 4){
             request.onreadystatechange = doNothing;
-
             callback(request, request.status);
-
         }
-
        };
 
        request.open('GET', url, true);
-
        request.send(null);
+  } 
 
-     } 
+  function doNothing(){}
 
-      function doNothing(){}
- 
+  var directions = new CM.Directions(map, 'stream', 'b461a726e391457e88052d7969cc1128');
 
+  var startLocation = new L.LatLng(53.345171, -6.245854);
+  var startMarker = new L.Marker(startLocation, {
+                                  title: "Start Point",
+                                  draggable: true });
+
+  var endLocation = new L.LatLng(53.325171, -6.275854);
+  var endMarker = new L.Marker(endLocation, {
+                                title: "End Point",
+	                        draggable: true });
+
+  map.addLayer(startMarker);
+  map.addLayer(endMarker);
+
+  function calculateRoute(){
+       var waypoints = [new L.LatLng(startMarker.getLatLng().lat(), startMarker.getLatLng().lng()),
+           new L.LatLng(endMarker.getLatLng().lat(), endMarker.getLatLng().lng())];
+       directions.loadFromWaypoints(waypoints, {travelMode: 'bicycle'});
+  }
   </script>
-
- 
-
-  <div id="message">Drag or click the map.</div>
-
- 
-
- 
-
 </body>
-
 </html>

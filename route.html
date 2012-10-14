@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.css" />
+  <link rel="stylesheet" href="c/s.css" type="text/css">
+<title>outspoken - route</title>
+</head>
+<body>
+<div id="outside-border">
+<div id="header"><a href="index.html"><img src="i/logo.png" /></a>
+<div id="topnav">
+<ul>
+<a href="report.html"><li>Make a Report</li></a>
+<a href="view.html"><li>Map</li></a>
+<a href="route.html"><li>Plan Route</li></a>
+<li>About Us</li>
+</ul>		
+</div><!-- /topnav -->
+</div>
+
+<div id="container">
+	<div id="left">
+
+          <input type="button" onClick="javascript:calculateRoute();" value="Drag the A & B Markers on the map then click here to calculate your route">
+          <input type="button" onclick="javascript:document.getElementById('stream').style.display = 'none';  map.checkResize();" value="Hide Directions">
+          <input type="button" onclick="javascript:document.getElementById('stream').style.display = 'block';  map.checkResize();" value="Show Directions">
+          
+          <div id="map_canvas" style="height:500px;"></div>
+
+	</div><!-- /left -->
+
+
+	<div id="right">                
+
+          <div id="stream" style="height:500px; overflow:scroll;"></div>
+
+	</div><!-- /right -->
+
+</div><!-- container -->
+
+<div id="footer"></div>
+
+</div><!-- /outside-border -->
+
+<script type="text/javascript" src="http://tile.cloudmade.com/wml/0.2/web-maps-lite.js"></script>
+<script type="text/javascript">
+
+        var cloudmade = new CM.Tiles.CloudMade.Web({key: 'b461a726e391457e88052d7969cc1128', styleId:22677});
+        var map = new CM.Map('map_canvas', cloudmade);
+        map.setCenter(new CM.LatLng(53.3404, -6.2622), 13);
+
+        <!-- map controls -->
+        var topRight = new CM.ControlPosition(CM.TOP_RIGHT, new CM.Size(50, 20));
+        map.addControl(new CM.LargeMapControl());
+
+        var directions = new CM.Directions(map, 'stream', 'b461a726e391457e88052d7969cc1128');
+
+        var startLocation = new CM.LatLng(53.345171, -6.245854);
+        var startMarker = new CM.Marker(startLocation, {
+	title: "Start Point",
+	draggable: true });
+
+        var endLocation = new CM.LatLng(53.325171, -6.275854);
+        var endMarker = new CM.Marker(endLocation, {
+	title: "End Point",
+	draggable: true });
+
+        map.addOverlay(startMarker);
+        map.addOverlay(endMarker);
+
+        //var waypoints = [new CM.LatLng(startMarker.getLatLng().lat(), startMarker.getLatLng().lng()),
+        //new CM.LatLng(endMarker.getLatLng().lat(), endMarker.getLatLng().lng())];
+        //directions.loadFromWaypoints(waypoints, {travelMode: 'bicycle'});
+
+        function calculateRoute(){
+          var waypoints = [new CM.LatLng(startMarker.getLatLng().lat(), startMarker.getLatLng().lng()),
+          new CM.LatLng(endMarker.getLatLng().lat(), endMarker.getLatLng().lng())];
+          directions.loadFromWaypoints(waypoints, {travelMode: 'bicycle'});
+        }
+
+</script>
+
+
+
+</body>
+
+</html>
