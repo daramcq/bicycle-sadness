@@ -20,6 +20,7 @@ a {
 	margin: 0 auto 20px auto;
 	padding:0 0 30px 0;
 }
+   
 
 #header {
 	margin: 20px auto 24px auto;
@@ -34,6 +35,9 @@ a {
 	background: #ffffff;
 	//border: solid 1px #000000;
 }
+.view-container{ 
+         min-height: 500px;
+ }
 
 #left {
 	position: relative;
