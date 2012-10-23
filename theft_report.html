@@ -4,10 +4,10 @@
 <input type="hidden" name ="current_lng" id="theft_lng" value=""/>       
 <input type="hidden" id = "counter" name="counter">
 <h2>Date Left:</h2>
-<input id="left_date" type="text" name="left_date" autocomplete="off" value="">
+<input id="left_date" type="text" name="left_date" autocomplete="off" value="" readonly="readonly"/>
 <script type="text/javascript">$('#left_date').datepicker();</script>
 <h2>Time Left:</h2>
-<input id="left_time" type="text" autocomplete="off" value="" onblur="timeValidate(this)"/>
+<input id="left_time" type="text" autocomplete="off" value="" onblur="timeValidate(this)" readonly="readonly"/>
 <script type="text/javascript"> 
 	$('#left_time').ptTimeSelect({
 		onClose: function(i){
@@ -17,12 +17,12 @@
 	});
 </script>
 <h2>Date Found Missing:</h2>
-<input id="found_date" type="text" name="found_date" autocomplete="off" value="">
+<input id="found_date" type="text" name="found_date" autocomplete="off" value="" readonly="readonly"/>
 <script type="text/javascript">
 	$('#found_date').datepicker();
 </script>
 <h2>Time Found Missing:</h2>
-<input id="found_time" type="text" autocomplete="off" value="" onblur="timeValidate(this)"/>
+<input id="found_time" type="text" autocomplete="off" value="" onblur="timeValidate(this)" readonly="readonly"/>
 <script type="text/javascript"> 
 	$('#found_time').ptTimeSelect({
 		onClose: function(i){

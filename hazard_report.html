@@ -6,10 +6,10 @@
 <h2>Explanation of problem:</h2>
 <textarea name="explanation" id="explanation" autocomplete="off" cols="31" rows="4"></textarea>
 <h2>Date Encountered:</h2>
-<input id="date" type="text" name="date" autocomplete="off" value="">
+<input id="date" type="text" name="date" autocomplete="off" value="" readonly="readonly"/>
 <script type="text/javascript" src ="js/datepicker.js"></script>
 <h2>Time Encountered:<h2>
-<input id="time" name="time" type="text" autocomplete="off"value=""onblur="timeValidate(this)"/>
+<input id="time" name="time" type="text" autocomplete="off"value=""onblur="timeValidate(this)" readonly="readonly"/>
 <script type="text/javascript"> $('#time').ptTimeSelect();</script>   
 <input type="submit" value="Submit" onsubmit="/"> 
 </form>

@@ -31,10 +31,10 @@
   <option value="other"> Other- Please specify Below</option>   
 </select>     
 <h2>Date of Accident:</h2>
-<input id="date" type="text" name="date" autocomplete="off" value="">
+<input id="date" type="text" name="date" autocomplete="off" value="" readonly="readonly">
 <script type="text/javascript">$('#date').datepicker();</script>
 <h2>Time of Accident:</h2>
-<input id="time" name="time" type="text" autocomplete="off" onblur="timeValidate(this);">
+<input id="time" name="time" type="text" autocomplete="off" onblur="timeValidate(this);" readonly="readonly"/>
 <script type="text/javascript">
 	$('#time').ptTimeSelect();
 </script>
