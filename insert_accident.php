@@ -2,10 +2,10 @@
 // Database Connection
 include 'local_connection2.php';
 
-
+$safe_comment = mysql_real_escape_string($_POST[comment]);
 $sql="INSERT INTO accidents (severity, vehicle, date, time, lat, lng, comment, elapsed, acc_cause)
 VALUES
-('$_POST[severity]','$_POST[vehicle]','$_POST[date]','$_POST[time]','$_POST[current_lat]','$_POST[current_lng]', '$_POST[comment]', '$_POST[counter]', '$_POST[cause]')";
+('$_POST[severity]','$_POST[vehicle]','$_POST[date]','$_POST[time]','$_POST[current_lat]','$_POST[current_lng]', '$safe_comment', '$_POST[counter]', '$_POST[cause]')";
 
 
 
