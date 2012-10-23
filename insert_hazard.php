@@ -12,8 +12,9 @@ function delayedRedirect()
 // Database Connection
 include 'local_connection2.php';
 
+$safe_explanation = mysql_real_escape_string($_POST[explanation]);
+$sql="INSERT INTO hazards (lat, lng, explanation, date, time, elapsed) VALUES ('$_POST[current_lat]','$_POST[current_lng]','$safe_explanation','$_POST[date]','$_POST[time]','$_POST[counter]')";
 
-$sql="INSERT INTO hazards (lat, lng, explanation, date, time, elapsed) VALUES ('$_POST[current_lat]','$_POST[current_lng]','$_POST[explanation]','$_POST[date]','$_POST[time]','$_POST[counter]')";
 
 $go = "thanks.php";
 if (!mysql_query($sql,$con))
