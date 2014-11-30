@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="outspoken">
+  <head>
+  {% include 'head.html' %}
+  <title> outspoken </title>
+  </head>
+  <body ng-controller="OutspokenController as outspoken">
+    <script src="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
+    <div id="outside-border">
+      <header></header>
+      <div id="container">
+	<div id="left">
+	  <div id="mapoverlay">
+	    <p class="home">
+	      Outspoken is crowd-sourced cycling information for the masses. Cyclists contribute, cyclists benefit. When you spot a problem or experience an accident or near miss, report it so that we can build up more information for cyclists. Before you set out on a new route, check it out for accidents and other dangers.
+	    </p>
+	  </div><!-- map overlay -->
+	  <div id="actionbuttons">
+	    <ul id="homemenu">
+	      <li><a href="/report"><img src="images/report_btn.png" />Make a Report</a></li>
+	      <li><a href="/view"><img src="images/map_btn.png" />Map</a></li>
+	      <li><a href="http://www.outspoken.ie/blog" target="_blank"><img src="images/blog_btn.png" />Blog</a></li>
+	      <li><a href="http://www.surveymonkey.com/s/VV8ZPVJ"><img src="images/about_btn.png" />Beta Survey</a></li>
+	    </ul>
+	  </div><!-- /actionbuttons -->
+	  <div id="map"></div>
+	</div><!-- /left -->
+
+	<div id="right">
+	  <div id="stream">
+
+
+	    <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+	    <script src="js/twitter_widget.js"></script>
+
+
+
+	  </div><!- /stream -->
+
+		    
+		    </div><!-- /right -->
+    </div><!-- container -->
+    <div id="footer"></div>
+</div><!-- /outside-border -->
+ <script src="js/lib/angular.min.js"></script>
+ <script src="js/app.js"></script>
+   
+ <script type="text/javascript" src="http://tile.cloudmade.com/wml/latest/web-maps-lite.js"></script>
+ <script src="js/script.js"></script>
+</body>
+</html>

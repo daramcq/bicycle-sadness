@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="outspoken">
+  <head>
+    {% include 'head.html' %}
+    <title>outspoken - view</title>
+  </head>
+  <body ng-controller="OutspokenController as outspoken">
+    <div id="outside-border">
+      <header></header>
+      <script src="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
+
+      <div id="container" class='view-container'>
+	<div id="left">
+	  <div id="map_canvas_large"></div>
+	</div><!-- /left -->
+      </div><!-- container -->
+
+      <div id="footer"></div>
+
+    </div><!-- /outside-border -->
+    <script src="js/lib/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script type="text/javascript" src="http://tile.cloudmade.com/wml/latest/web-maps-lite.js"></script>
+    <script src="/js/script.js"></script>
+  </body>
+</html>
